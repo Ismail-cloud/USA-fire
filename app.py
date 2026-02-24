@@ -4,6 +4,8 @@ import plotly.express as px
 import numpy as np
 import gdown
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 # --- CONFIGURATION & CHARGEMENT ---
