@@ -50,17 +50,22 @@ if page == "Accueil":
 elif page == "Analyse Météo":
     st.header("🌦️ Influence des conditions Météo")
     
-    # 1. PLACE LE FILTRE ICI (Juste après le header)
-    st.write("### Filtrer par zone géographique")
-    selected_state = st.selectbox("Choisir un État pour l'analyse météo", df['STATE'].unique())
+    # 1. Définir manuellement vos 5 États (vérifiez bien l'orthographe dans votre CSV)
+    top_5_states = ['CA', 'TX', 'FL', 'AZ', 'NV'] # REMPLACEZ PAR VOS 5 ÉTATS
     
-    # 2. CRÉE LE DATAFRAME FILTRÉ
+    # 2. Créer le filtre limité à ces 5 choix
+    st.write("### Sélectionner un État (Top 5 disposant de données météo)")
+    selected_state = st.selectbox("Choisir l'État à analyser :", top_5_states)
+    
+    # 3. Filtrer le dataframe
     df_filtered = df[df['STATE'] == selected_state]
     
-    st.write(f"Analyse pour l'État : **{selected_state}** ({len(df_filtered)} incendies répertoriés)")
+    # Information sur l'État sélectionné
+    st.info(f"Affichage des données météo pour : **{selected_state}**")
+    st.write(f"Nombre d'incendies analysés dans cet État : {len(df_filtered)}")
     st.divider()
 
-    # --- 3. UTILISE df_filtered POUR TES GRAPHIQUES ---
+    # --- La suite de vos graphiques avec df_filtered ---
     col1, col2 = st.columns(2)
 
     with col1:
