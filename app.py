@@ -7,9 +7,47 @@ import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# --- 1. CONFIGURATION (TOUJOURS EN PREMIER) ---
+st.set_page_config(page_title="Wildfires Analysis", layout="wide")
 
-# --- CONFIGURATION & CHARGEMENT ---
+# --- 2. CHARGEMENT DES DONNÉES ---
 @st.cache_data 
+def load_data():
+    file_id = '14cbUlLwF9FXAVBxa3CHe_w8Y5veh3UBd'
+    url = f'https://drive.google.com/uc?id={file_id}'
+    output = 'fires_clean.csv'
+    
+    if not os.path.exists(output):
+        # On affiche un message pendant le téléchargement
+        with st.spinner('Téléchargement du dataset (778 Mo)... Cela peut prendre une minute.'):
+            gdown.download(url, output, quiet=False)
+    
+    df = pd.read_csv(output, low_memory=False)
+    
+    if 'FIRE_YEAR' in df.columns:
+        df['FIRE_YEAR'] = df['FIRE_YEAR'].astype(int)
+        
+    return df
+
+# Appel de la fonction de chargement
+df = load_data()
+
+# --- 3. INTERFACE PRINCIPALE ---
+st.title("🔥 Analyse des Incendies aux USA")
+
+# Barre latérale pour la navigation
+page = st.sidebar.radio("Navigation", ["Accueil", "Analyse Météo", "Visualisations"])
+
+if page == "Accueil":
+    st.write("### Bienvenue dans le projet d'analyse des Wildfires")
+    st.write("Ce dashboard interactif présente les résultats de notre étude sur les incendies de 1992 à 2015.")
+    st.info("Utilisez le menu à gauche pour explorer les différentes étapes.")
+    
+    if st.checkbox("Afficher un aperçu des données"):
+        st.write(f"Le dataset contient {df.shape[0]} lignes.")
+        st.dataframe(df.head(10))
+
+# Données meteo - Lucien
 elif page == "Analyse Météo":
     st.header("🌦️ Influence des conditions Météo")
     
