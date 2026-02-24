@@ -35,7 +35,7 @@ st.set_page_config(page_title="Wildfires Analysis", layout="wide")
 st.title("🔥 Analyse des Incendies aux USA")
 
 # Barre latérale pour la navigation
-page = st.sidebar.radio("Navigation", ["Accueil", "Exploration des données", "Visualisations"])
+page = st.sidebar.radio("Navigation", ["Accueil", "Analyse Météo", "Visualisations"])
 
 if page == "Accueil":
     st.write("### Bienvenue dans le projet d'analyse des Wildfires")
