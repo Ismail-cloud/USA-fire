@@ -39,7 +39,7 @@ if page == "Accueil":
     st.write("Ce dashboard interactif présente les résultats de notre étude sur les incendies de 1992 à 2015.")
     st.info("Utilisez le menu à gauche pour explorer les différentes étapes.")
     if st.checkbox("Afficher un aperçu des données"):
-    st.dataframe(df.head(10))
+        st.dataframe(df.head(10))
 
 elif page == "Exploration des données":
     st.header("🔍 Exploration et Qualité des données")
