@@ -107,7 +107,7 @@ elif page == "Analyse Météo":
     st.divider()
 
     # --- LIGNE 2 : HEXBINS CÔTE À CÔTE ---
-    st.subheader("2. Le rôle complexe du vent : Densité vs Propagation")
+    st.subheader("2. Le rôle  du vent : Densité vs Taille")
     
     st.warning("""
     **Analyse :** Si la majorité des incendies se déclarent par temps calme (peu de vent), 
@@ -123,7 +123,7 @@ elif page == "Analyse Météo":
         fig2, ax2 = plt.subplots(figsize=(10, 7))
         hb2 = ax2.hexbin(df_filtered['temp_max'], df_filtered['vent_max'], gridsize=25, cmap='YlOrRd', mincnt=1)
         fig2.colorbar(hb2, ax=ax2, label='Nombre de feux')
-        ax2.set_title('Densité : Où les feux démarrent-ils ?')
+        ax2.set_title('Densité vs vent et tempéarture')
         ax2.set_xlabel('Température (°C)')
         ax2.set_ylabel('Vent (km/h)')
         plt.tight_layout()
@@ -141,7 +141,7 @@ elif page == "Analyse Météo":
                         cmap='YlOrBr',
                         mincnt=1)
         fig3.colorbar(hb3, ax=ax3, label='Taille moy. (ha)')
-        ax3.set_title('Sévérité : Quels feux sont les plus gros ?')
+        ax3.set_title('Taille vs vent et tempéarture')
         ax3.set_xlabel('Température (°C)')
         ax3.set_ylabel('Vent (km/h)')
         plt.tight_layout()
