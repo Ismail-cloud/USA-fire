@@ -50,8 +50,8 @@ if page == "Accueil":
 elif page == "Analyse Météo":
     st.header("🌦️ Influence des conditions Météo")
     
-    # 1. Définir manuellement vos 5 États (vérifiez bien l'orthographe dans votre CSV)
-    top_5_states = ['CA', 'TX', 'FL', 'AZ', 'NV'] # REMPLACEZ PAR VOS 5 ÉTATS
+    # Top 5 etats
+    top_5_states = ['CA', 'GA', 'TX', 'NC', 'FL'] 
     
     # 2. Créer le filtre limité à ces 5 choix
     st.write("### Sélectionner un État (Top 5 disposant de données météo)")
