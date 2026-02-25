@@ -159,7 +159,22 @@ elif page == "Analyse de Sévérité":
     sns.histplot(np.log10(df["FIRE_SIZE_HECT"] + 1), bins=50, color='orange')
     plt.xlabel("Log10(FIRE_SIZE_HECT + 1)")
     plt.ylabel("Nombre de feux")
-    st.pyplot(fig)
+    col1, col2 = st.columns([2,1])
+    
+    with col1:
+        st.pyplot(fig)
+
+    with col2:
+        st.markdown("""
+    ### 📌 Lecture du graphique
+    
+    La distribution est fortement asymétrique :
+    - La majorité des incendies sont de petite taille.
+    - Quelques feux très importants créent une longue "queue".
+    
+    L’échelle logarithmique permet de visualiser simultanément
+    les petits et les très grands incendies.
+    """)
 
     # 2️⃣ Nombre de feux par classe (A à G)
     st.subheader("Nombre de feux par classe (FIRE_SIZE_CLASS)")
@@ -169,6 +184,15 @@ elif page == "Analyse de Sévérité":
     plt.ylabel("Nombre de feux")
     plt.title("Répartition des classes de feux")
     st.pyplot(fig)
+    col1, col2 = st.columns([2,1])
+    st.markdown("""
+    ### 📌 Lecture du graphique
+
+    - Les classes A et B dominent largement en nombre.
+    - Les grands feux (F, G) sont très rares.
+
+    👉 La majorité des incendies restent localisés et contrôlables.
+    """)
 
     # 3️⃣ Surface totale brûlée par classe de feu
     st.subheader("Surface totale brûlée par classe de feu")
@@ -178,6 +202,15 @@ elif page == "Analyse de Sévérité":
     plt.ylabel("Total hectares brûlés")
     plt.title("Surface totale brûlée par classe de feu")
     st.pyplot(fig)
+    st.markdown("""
+    ### 📌 Lecture du graphique
+
+    Bien que rares, les feux de classe F et G
+    représentent la majorité des surfaces brûlées.
+
+    👉 Ce ne sont pas les petits feux qui posent problème,
+    mais les événements extrêmes.
+    """)
 
     # 4️⃣ Tendance de la sévérité des feux par année
     st.subheader("Tendance de la sévérité des feux par année (médiane FIRE_SIZE_HECT)")
@@ -187,6 +220,16 @@ elif page == "Analyse de Sévérité":
     plt.ylabel("Taille du feu (hectares)")
     plt.xticks(rotation=45)
     st.pyplot(fig)
+    st.markdown("""
+    ### 📌 Lecture du graphique
+
+    La médiane annuelle varie selon les années.
+    Certaines années présentent des incendies
+    typiquement plus étendus.
+
+    👉 Cela suggère une influence de facteurs annuels
+    (climat, sécheresse, politiques de gestion).
+    """)
 
     # 5️⃣ Distribution de la taille des feux par cause
     st.subheader("Distribution de la taille des feux par cause")
@@ -198,6 +241,16 @@ elif page == "Analyse de Sévérité":
     plt.ylabel("Taille du feu (hectares, échelle log)")
     plt.title("Distribution de la taille des feux par cause")
     st.pyplot(fig)
+    st.markdown("""
+    ### 📌 Lecture du graphique
+
+    - La médiane reste relativement similaire selon les causes.
+    - Cependant, certaines causes (ex: foudre)
+    présentent davantage d'incendies extrêmes.
+
+    👉 La différence se situe surtout dans les valeurs extrêmes,
+    pas dans les feux typiques.
+    """)
 
 elif page == "Visualisations":
     st.header("Autres Visualisations")
