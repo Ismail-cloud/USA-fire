@@ -34,7 +34,7 @@ df = load_data()
 
 # --- 3. STRUCTURE DE L'INTERFACE ---
 
-st.title("🔥 Analyse des Incendies aux USA (1992-2015)")
+st.title("🔥 Analyse des feux de forêt aux USA (1992-2015)")
 
 # Barre latérale pour la navigation
 page = st.sidebar.radio("Navigation", ["Accueil", "Analyse Temporelle", "Analyse de Sévérité", "Analyse par Localisation", "Analyse Météo", "Conclusion"])
@@ -44,10 +44,12 @@ if page == "Accueil":
     st.write("### Bienvenue dans le projet d'analyse des Wildfires")
     st.write("""
     Ce dashboard interactif permet d'explorer les facteurs influençant les incendies de forêt.
-    Nous avons croisé les données historiques du service forestier américain avec des données météo précises.
+    Nous avons travaillé sur les données historiques des services forestiers américains.
+    Nous avons selectionné, nettoyé ou encore transformé ces données pour les rendre exploitables.
+    Nous avons ensuite croisé ces données avec des données météorologiques précises.
     """)
     
-    st.info("Utilisez le menu à gauche pour naviguer entre l'analyse météo et les visualisations globales.")
+    st.info("Utilisez le menu à gauche pour naviguer entre les différents axes d'analyse.")
     
     if st.checkbox("Afficher un aperçu des données brutes (10 premières lignes)"):
         st.dataframe(df.head(10))
@@ -317,7 +319,7 @@ elif page == "Analyse Temporelle":
     Rootcause_Month.show()
     st.plotly_chart(Rootcause_Month)
 
-    st.write("Il est intéressant de constater d'autres saisonalités dans ce graph, comme par exemple les feux de forêt liés au feux d'artifice, si on ne sélectionne que cette cause sur le graph ci-dessous (en cliquant sur les élements de légende) on constate un pic en juillet à 6446 feux, ce qui reste malgré tout très faible au vu du nombre total de feux en juillet qui s'élève à plus de 237 000.")
+    st.write("Il est intéressant de constater d'autres saisonalités dans ce visuel, comme par exemple les feux de forêt liés au feux d'artifice, si on ne sélectionne que cette cause sur le visuel ci-dessus (en cliquant sur les éléments de légende) on constate un pic en juillet à 6446 feux, ce qui reste malgré tout très faible au vu du nombre total de feux en juillet qui s'élève à plus de 237 000.")
 
 
     #4️⃣ Analyse cause par an
