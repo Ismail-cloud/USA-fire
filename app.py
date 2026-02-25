@@ -432,7 +432,7 @@ elif page == "Analyse Temporelle":
     st.plotly_chart(year_cause_size)
 
 # --- PAGE ANALYSE LOCALISATION (TIPHAINE) ---
-elif page == "Analyse de par Localisation":
+elif page == "Analyse par Localisation":
 
     # 1️⃣ Hectares brûlés par État
     df_state = df.groupby("STATE", as_index=False).agg({"FIRE_SIZE_HECT": "sum"})
