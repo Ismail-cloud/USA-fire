@@ -403,7 +403,7 @@ elif page == "Analyse par Localisation":
         locationmode='USA-states',
         color='STAT_CAUSE_DESCR',
         scope='usa',
-        color_discrete_map=c
+        color_discrete_map=c,
         title='Cause principale des feux par États'
     )
     st.plotly_chart(fig)
