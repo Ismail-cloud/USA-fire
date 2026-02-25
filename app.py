@@ -149,11 +149,9 @@ elif page == "Analyse Météo":
 
 elif page == "Analyse Temporelle":
     st.header("Autres Visualisations")
+# --- PAGE ANALYSE SEVERITE (ISMAIL) ---
 elif page == "Analyse de Sévérité":
     st.write("### Analyse de la sévérité des feux")
-
-    st.subheader("Aperçu du dataset")
-    st.dataframe(df.head(10))
 
     # 1️⃣ Distribution de la taille des feux (échelle log)
     st.subheader("Distribution de la taille des feux (échelle log)")
