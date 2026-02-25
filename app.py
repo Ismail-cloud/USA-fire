@@ -37,7 +37,7 @@ df = load_data()
 st.title("🔥 Analyse des Incendies aux USA (1992-2015)")
 
 # Barre latérale pour la navigation
-page = st.sidebar.radio("Navigation", ["Accueil", "Analyse Météo", "Visualisations", "Analyse de Sévérité"])
+page = st.sidebar.radio("Navigation", ["Accueil", "Analyse Temporelle", "Analyse Météo", "Analyse de Sévérité"])
 
 # --- PAGE ACCUEIL ---
 if page == "Accueil":
@@ -147,8 +147,7 @@ elif page == "Analyse Météo":
         plt.tight_layout()
         st.pyplot(fig3)
 
-elif page == "Analyse Temporelle":
-    st.header("Autres Visualisations")
+
 # --- PAGE ANALYSE SEVERITE (ISMAIL) ---
 elif page == "Analyse de Sévérité":
     st.write("### Analyse de la sévérité des feux")
@@ -252,7 +251,188 @@ elif page == "Analyse de Sévérité":
     pas dans les feux typiques.
     """)
 
-elif page == "Visualisations":
-    st.header("Autres Visualisations")
+
+# --- PAGE ANALYSE TEMPORELLE (SOPHIE) ---
+elif page == "Analyse Temporelle":
+    st.write("### Analyse temporelle des feux")
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+    
+    # 1️⃣ Evolution de la fréquence et taille des feux  par an
+    st.subheader("Evolution de fréquence et de la la taille des feux  par an")
+    st.warning("""
+    **Analyse :** On constate une fréquence des feux par an globalement constante, mais avec des feux qui sont par contre de plus en plus sévères au fil du temps car de plus grande taille :
+    """)
+    
+    df_year_size=df.groupby(["FIRE_YEAR"],as_index=False)["FIRE_SIZE_HECT"].sum()
+
+    fig = go.Figure()
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    fig.add_trace(go.Histogram(x        = df['FIRE_YEAR'],
+                                   name = "fréquence des feux",
+                                   marker_line = dict(width = 0.5, color = 'black')))
+
+
+    fig.add_trace(go.Scatter(x        = df_year_size['FIRE_YEAR'],
+                                 y        = df_year_size['FIRE_SIZE_HECT'],
+                                 name = "Taille des feux",
+                                 line=dict(color='black', width=4),
+                                 marker_line = dict(width = 0.5, color = 'black')),
+                      secondary_y=True,)
+
+    fig.update_layout(title="Evolution de la fréquence et de la taille des feux par année",
+                          width=1500,
+                          height=500,
+                          bargap=0.3)
+
+    fig.update_xaxes(title_text="Année")
+
+    fig.update_yaxes(title_text="Quantité de feux déclarés", secondary_y=False)
+    fig.update_yaxes(title_text="Taille des feux en hectares", secondary_y=True)
+
+    fig.show()
+
+    st.plotly_chart(fig)
+
+    # 2️⃣ Répartition des feux  par mois
+    st.subheader("Répartition des feux  par mois")
+    st.warning("""
+    **Analyse :** Les feux de forêts ont lieu principalement au printemps et en été :
+    """)
+
+    df_month_qty=df.groupby(["DISCOVERY_MONTH"],as_index=False)["OBJECTID"].count()
+
+    Bar_Month_Qty = px.bar(df_month_qty,
+             x= 'DISCOVERY_MONTH',
+             y = 'OBJECTID')
+
+    Bar_Month_Qty.update_layout(title_text = "Fréquence des feux par mois cumulée sur les 23 années analysées",
+                            xaxis_title  = "Mois",
+                            yaxis_title = "Quantité de feux déclarés",
+                            xaxis = dict(
+                                tickmode = 'array',
+                                tickvals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                                ticktext = ['Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', "Aug", "Sept", "Oct", "Nov", "Dec"]))
+
+    Bar_Month_Qty.show()
+    st.plotly_chart(Bar_Month_Qty)
+
+
+    st.warning("""
+    **Analyse :** C'est en été que l'on a les feux les plus sévères en taille :
+    """)
+
+    df_month_size=df.groupby(["DISCOVERY_MONTH"],as_index=False)["FIRE_SIZE_HECT"].sum()
+    df_month_size=df_month_size.sort_values(by='DISCOVERY_MONTH')
+
+    Bar_Month_Size = go.Figure()
+
+    Bar_Month_Size=px.bar(df_month_size,
+             x = 'DISCOVERY_MONTH',
+             y = 'FIRE_SIZE_HECT',
+             color = 'FIRE_SIZE_HECT',
+             color_continuous_scale=px.colors.sequential.Viridis_r)
+
+    Bar_Month_Size.update_layout(title_text = "Somme des tailles des feux par mois sur les 23 années analysées",
+                             xaxis_title  = "Mois",
+                            yaxis_title = "Taille des feux en hectares",
+                             legend_title = "Taille des feux en hectares",
+                             xaxis = dict(
+                                tickmode = 'array',
+                                tickvals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                                ticktext = ['Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', "Aug", "Sept", "Oct", "Nov", "Dec"]))
+
+    Bar_Month_Size.show()
+    st.plotly_chart(Bar_Month_Size)
+
+    # 3️⃣ Analyse des causes par mois :
+    st.subheader("Analyse des causes par mois")
+
+    st.warning("""
+    **Analyse :** Les causes principales diffèrent entre le printemps (Debris Burning) et l’été (Lightning):
+    """)
+
+    import plotly.express as px
+
+    # map stat cause to a color
+    c = dict(zip(df["STAT_CAUSE_DESCR"].unique(), px.colors.qualitative.T10))
+
+    Rootcause_Month = px.histogram(df,
+                                   x="DISCOVERY_MONTH",
+                                  color='STAT_CAUSE_DESCR',
+                                   barmode='group',
+                                  height=600,
+                                   color_discrete_map=c)
+                                  #color_discrete_sequence=px.colors.qualitative.T10)
+
+    Rootcause_Month.update_layout(title_text = "Fréquence des feux par rootcause par mois sur les 23 années analysées",
+                             xaxis_title  = "Mois",
+                            yaxis_title = "Fréquence des feux",
+                             legend_title = "Rootcause des feux",
+                             xaxis = dict(
+                                tickmode = 'array',
+                                tickvals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                                ticktext = ['Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', "Aug", "Sept", "Oct", "Nov", "Dec"]))
+
+    Rootcause_Month.show()
+    st.plotly_chart(Rootcause_Month)
+
+    st.write("Il est intéressant de constater d'autres saisonalités dans ce graph, comme par exemple les feux de forêt liés au feux d'artifice, si on ne sélectionne que cette cause sur le graph ci-dessous (en cliquant sur les élements de légende) on constate un pic en juillet à 6446 feux, ce qui reste malgré tout très faible au vu du nombre total de feux en juillet qui s'élève à plus de 237 000.")
+
+
+    #4️⃣ Analyse cause par an
+    st.subheader("Analyse des causes par an")
+
+    df_year_cause_size=df.groupby(["FIRE_YEAR", "STAT_CAUSE_DESCR"],as_index=False ).agg({"FIRE_SIZE_HECT" : "sum", "OBJECTID" : "count"})
+    df_year_cause_size=df_year_cause_size.sort_values(by= "FIRE_YEAR")
+
+
+    st.warning("""
+    **Analyse :** La hiérarchie au sein des causes est restée sensiblement la même au fil des années, on ne voit pas de causes qui disparaissent ou d'autres qui apparaissent avec le temps 
+               et les causes principales sont « Debris Burning » suivi de « Arson » (incendie criminel) et « Lightning » (Orages) :
+    """)
+    c = dict(zip(df["STAT_CAUSE_DESCR"].unique(), px.colors.qualitative.T10))
+
+    plt.figure(figsize=[180,200])
+    year_cause_freq=px.line(df_year_cause_size,
+                            x = "FIRE_YEAR",
+                            y = "OBJECTID",
+                            color = "STAT_CAUSE_DESCR",
+                            color_discrete_map=c)
+
+    year_cause_freq.update_layout(title='Evolution de la quantité de feux par rootcause et par an',
+                                  xaxis_title='Année',
+                                  yaxis_title='Quantité de feux',
+                                  legend_title = "Rootcause des feux")
+
+    year_cause_freq.show()
+    st.plotly_chart(year_cause_freq)
+
+
+
+    st.warning("""
+    **Analyse :** L’évolution de ces causes en taille de feux suit l’augmentation des feux de forêt au fil des années, les orages (Lightning) étant la cause principale:
+    """)
+
+
+    plt.figure(figsize=[180,200])
+    year_cause_size=px.line(df_year_cause_size,
+                            x = "FIRE_YEAR",
+                            y = "FIRE_SIZE_HECT",
+                            color = "STAT_CAUSE_DESCR",
+                            color_discrete_map=c)
+
+    year_cause_size.update_layout(title='Evolution de la taille des feux par rootcause et par an',
+                                  xaxis_title='Année',
+                                  yaxis_title='Taille des feux en hectare',
+                                  legend_title = "Rootcause des feux")
+
+    year_cause_size.show()
+    st.plotly_chart(year_cause_size)
+
+
+
+
 
 
