@@ -150,106 +150,45 @@ elif page == "Analyse Météo":
 
 # --- PAGE ANALYSE SEVERITE (ISMAIL) ---
 elif page == "Analyse de Sévérité":
-    st.write("### Analyse de la sévérité des feux")
+    st.subheader("Distribution de la taille des feux (log)")
+    fig = px.histogram(df, x=np.log10(df["FIRE_SIZE_HECT"] + 1), nbins=50,
+                       labels={'x':'Log10(FIRE_SIZE_HECT + 1)'},
+                       title="Distribution des tailles de feux",
+                       color_discrete_sequence=['#FF7F0E'])  # orange
+    st.plotly_chart(fig, use_container_width=True)
+    st.write("On observe que la majorité des feux sont de petite taille, mais les feux très larges représentent beaucoup d'hectares brûlés.")
 
-    # 1️⃣ Distribution de la taille des feux (échelle log)
-    st.subheader("Distribution de la taille des feux (échelle log)")
-    fig = plt.figure(figsize=(10,5))
-    sns.histplot(np.log10(df["FIRE_SIZE_HECT"] + 1), bins=50, color='orange')
-    plt.xlabel("Log10(FIRE_SIZE_HECT + 1)")
-    plt.ylabel("Nombre de feux")
-    col1, col2 = st.columns([2,1])
-    
-    with col1:
-        st.pyplot(fig)
+    st.subheader("Nombre de feux par classe")
+    df_class = df['FIRE_SIZE_CLASS'].value_counts().sort_index().reset_index()
+    df_class.columns = ['FIRE_SIZE_CLASS','count']
+    fig2 = px.bar(df_class, x='FIRE_SIZE_CLASS', y='count',
+                  title="Nombre de feux par classe (A à G)",
+                  color_discrete_sequence=['#1F77B4'])  # bleu
+    st.plotly_chart(fig2, use_container_width=True)
+    st.write("Les petites classes (A, B, C) représentent le plus grand nombre de feux.")
 
-    with col2:
-        st.markdown("""
-    ### 📌 Lecture du graphique
-    
-    La distribution est fortement asymétrique :
-    - La majorité des incendies sont de petite taille.
-    - Quelques feux très importants créent une longue "queue".
-    
-    L’échelle logarithmique permet de visualiser simultanément
-    les petits et les très grands incendies.
-    """)
+    st.subheader("Surface totale brûlée par classe")
+    df_sum = df.groupby('FIRE_SIZE_CLASS')['FIRE_SIZE_HECT'].sum().sort_index().reset_index()
+    fig3 = px.bar(df_sum, x='FIRE_SIZE_CLASS', y='FIRE_SIZE_HECT',
+                  title="Surface totale brûlée par classe",
+                  color_discrete_sequence=['#D62728'])  # rouge
+    st.plotly_chart(fig3, use_container_width=True)
+    st.write("Les classes F et G, bien que rares, représentent la majorité de la surface brûlée.")
 
-    # 2️⃣ Nombre de feux par classe (A à G)
-    st.subheader("Nombre de feux par classe (FIRE_SIZE_CLASS)")
-    fig = plt.figure(figsize=(8,5))
-    df['FIRE_SIZE_CLASS'].value_counts().sort_index().plot(kind='bar', color='green')
-    plt.xlabel("Classe de taille (A à G)")
-    plt.ylabel("Nombre de feux")
-    plt.title("Répartition des classes de feux")
-    st.pyplot(fig)
-    col1, col2 = st.columns([2,1])
-    st.markdown("""
-    ### 📌 Lecture du graphique
+    st.subheader("Tendance de la sévérité par année")
+    df_year = df.groupby('FIRE_YEAR')['FIRE_SIZE_HECT'].median().reset_index()
+    fig4 = px.bar(df_year, x='FIRE_YEAR', y='FIRE_SIZE_HECT',
+                  title="Tendance annuelle de la taille médiane des feux",
+                  color_discrete_sequence=['#9467BD'])  # violet
+    st.plotly_chart(fig4, use_container_width=True)
+    st.write("On observe certaines années avec une augmentation de la taille médiane des feux.")
 
-    - Les classes A et B dominent largement en nombre.
-    - Les grands feux (F, G) sont très rares.
-
-    👉 La majorité des incendies restent localisés et contrôlables.
-    """)
-
-    # 3️⃣ Surface totale brûlée par classe de feu
-    st.subheader("Surface totale brûlée par classe de feu")
-    fig = plt.figure(figsize=(8,5))
-    df.groupby('FIRE_SIZE_CLASS')['FIRE_SIZE_HECT'].sum().sort_index().plot(kind='bar', color='red')
-    plt.xlabel("Classe de taille (A à G)")
-    plt.ylabel("Total hectares brûlés")
-    plt.title("Surface totale brûlée par classe de feu")
-    st.pyplot(fig)
-    st.markdown("""
-    ### 📌 Lecture du graphique
-
-    Bien que rares, les feux de classe F et G
-    représentent la majorité des surfaces brûlées.
-
-    👉 Ce ne sont pas les petits feux qui posent problème,
-    mais les événements extrêmes.
-    """)
-
-    # 4️⃣ Tendance de la sévérité des feux par année
-    st.subheader("Tendance de la sévérité des feux par année (médiane FIRE_SIZE_HECT)")
-    fig = plt.figure(figsize=(12,6))
-    sns.barplot(data=df, x='FIRE_YEAR', y='FIRE_SIZE_HECT', estimator='median', ci=None, color='purple')
-    plt.xlabel("Année")
-    plt.ylabel("Taille du feu (hectares)")
-    plt.xticks(rotation=45)
-    st.pyplot(fig)
-    st.markdown("""
-    ### 📌 Lecture du graphique
-
-    La médiane annuelle varie selon les années.
-    Certaines années présentent des incendies
-    typiquement plus étendus.
-
-    👉 Cela suggère une influence de facteurs annuels
-    (climat, sécheresse, politiques de gestion).
-    """)
-
-    # 5️⃣ Distribution de la taille des feux par cause
-    st.subheader("Distribution de la taille des feux par cause")
-    fig = plt.figure(figsize=(12,6))
-    sns.boxplot(x='STAT_CAUSE_DESCR', y='FIRE_SIZE_HECT', data=df)
-    plt.yscale('log')
-    plt.xticks(rotation=45, ha='right')
-    plt.xlabel("Cause du feu")
-    plt.ylabel("Taille du feu (hectares, échelle log)")
-    plt.title("Distribution de la taille des feux par cause")
-    st.pyplot(fig)
-    st.markdown("""
-    ### 📌 Lecture du graphique
-
-    - La médiane reste relativement similaire selon les causes.
-    - Cependant, certaines causes (ex: foudre)
-    présentent davantage d'incendies extrêmes.
-
-    👉 La différence se situe surtout dans les valeurs extrêmes,
-    pas dans les feux typiques.
-    """)
+    st.subheader("Distribution des causes par taille de feu")
+    fig5 = px.box(df, x='STAT_CAUSE_DESCR', y='FIRE_SIZE_HECT', log_y=True,
+                  title="Distribution de la taille des feux par cause",
+                  color_discrete_sequence=['#2CA02C'])  # vert
+    st.plotly_chart(fig5, use_container_width=True)
+    st.write("Pour la plupart des incendies, la médiane est similaire quel que soit le type de cause, mais quelques feux très grands se produisent souvent suite à des orages ou négligences.")
 
 
 # --- PAGE ANALYSE TEMPORELLE (SOPHIE) ---
