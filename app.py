@@ -183,6 +183,21 @@ elif page == "Analyse de Sévérité":
         """Affiche un graphique Plotly via HTML pour réduire la surcharge Streamlit"""
         components.html(pio.to_html(fig, include_plotlyjs='cdn', full_html=False), height=height)
 
+    # --- Explication des classes de feux ---
+    st.markdown("""
+    #### 📌 Classement des feux par taille
+    Les feux sont classés de A à G selon la surface finale brûlée.  
+    Pour rendre les petites surfaces plus compréhensibles, nous utilisons **m²** pour les deux premières classes, et **hectares** pour les autres :  
+
+    - **A :** 0 – 1 000 m² (~0 – 0,1 ha)  
+    - **B :** 1 001 – 40 000 m² (~0,1 – 4 ha)  
+    - **C :** 4 – 40 ha  
+    - **D :** 40 – 120 ha  
+    - **E :** 120 – 400 ha  
+    - **F :** 400 – 2 000 ha  
+    - **G :** > 2 000 ha
+    """)
+    
     # --- Mise en page côte à côte pour les deux premiers graphes ---
     col1, col2 = st.columns(2)
 
@@ -221,7 +236,7 @@ elif page == "Analyse de Sévérité":
                   color_discrete_sequence=['#2CA02C'])  # vert
     st_plotly_fast(fig5, height=450)
     st.write("Pour la plupart des incendies, la médiane est similaire quel que soit le type de cause, mais quelques feux très grands se produisent souvent suite à des orages ou négligences.")
-    
+
 
 # --- PAGE ANALYSE TEMPORELLE (SOPHIE) ---
 elif page == "Analyse Temporelle":
