@@ -78,11 +78,11 @@ elif page == "Analyse Météo":
     # Logique du filtre
     selected_abbrev = state_mapping[selected_full_name]
     if selected_abbrev == "ALL":
-        df_filtered = df.dropna(subset=['temp_max', 'vent_max', 'precip'])
+        df_filtered = df.dropna(subset=['temp_max', 'vent_max', 'pluie_mm'])
     else:
         df_filtered = df[df['STATE'] == selected_abbrev]
 
-    # --- NOUVELLE SECTION : KPI ---
+    # --- KPI ---
     st.write(f"### Indicateurs clés : {selected_full_name}")
     col_kpi1, col_kpi2, col_kpi3, col_kpi4 = st.columns(4)
     
