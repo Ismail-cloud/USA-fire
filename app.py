@@ -173,7 +173,6 @@ elif page == "Analyse Météo":
         plt.tight_layout()
         st.pyplot(fig3)
 
-# --- PAGE ANALYSE SEVERITE (ISMAIL) OPTIMISÉE ---
 elif page == "Analyse de Sévérité":
     import plotly.io as pio
     import streamlit.components.v1 as components
@@ -201,7 +200,7 @@ elif page == "Analyse de Sévérité":
         - **F :** 400 – 2 000 ha  
         - **G :** > 2 000 ha
         """)
-        
+
     # --- Mise en page côte à côte pour les deux premiers graphes ---
     col1, col2 = st.columns(2)
 
@@ -211,41 +210,54 @@ elif page == "Analyse de Sévérité":
         df_class.columns = ['FIRE_SIZE_CLASS','count']
         fig2 = px.bar(df_class, x='FIRE_SIZE_CLASS', y='count',
                       title="Nombre de feux par classe (A à G)",
-                      color_discrete_sequence=['#1F77B4'])  # bleu
+                      color_discrete_sequence=['#1F77B4'])
         st_plotly_fast(fig2, height=400)
-        st.write("Les petites classes (A, B, C) représentent le plus grand nombre de feux.")
+        st.markdown("""
+        ### 📌 Lecture du graphique
+        - Les petites classes (A, B, C) représentent le plus grand nombre de feux.
+        - Les classes D à G sont moins fréquentes, mais leur impact sur la surface totale brûlée est important.
+        """)
 
     with col2:
         st.subheader("Surface totale brûlée par classe")
         df_sum = df.groupby('FIRE_SIZE_CLASS')['FIRE_SIZE_HECT'].sum().sort_index().reset_index()
         fig3 = px.bar(df_sum, x='FIRE_SIZE_CLASS', y='FIRE_SIZE_HECT',
                       title="Surface totale brûlée par classe",
-                      color_discrete_sequence=['#D62728'])  # rouge
+                      color_discrete_sequence=['#D62728'])
         st_plotly_fast(fig3, height=400)
-        st.write("Les classes F et G, bien que rares, représentent la majorité de la surface brûlée.")
+        st.markdown("""
+        ### 📌 Lecture du graphique
+        - Les classes F et G, bien que rares, représentent la majorité de la surface brûlée.
+        - Les classes A à D contribuent peu à la surface totale malgré leur fréquence.
+        """)
 
     # 3️⃣ Tendance de la sévérité par année
     st.subheader("Tendance annuelle de la taille médiane des feux")
     df_year = df.groupby('FIRE_YEAR')['FIRE_SIZE_HECT'].median().reset_index()
-
     fig4 = px.line(df_year, x='FIRE_YEAR', y='FIRE_SIZE_HECT',
-                title="Tendance annuelle de la taille médiane des feux",
-                markers=True,  # ajoute des points sur la ligne
-                line_shape='linear',  # forme de la ligne
-                color_discrete_sequence=['#9467BD'])  # violet
-
+                   title="Tendance annuelle de la taille médiane des feux",
+                   markers=True,
+                   line_shape='linear',
+                   color_discrete_sequence=['#9467BD'])
     st_plotly_fast(fig4, height=400)
-    st.write("On observe certaines années avec une augmentation de la taille médiane des feux.")
+    st.markdown("""
+    ### 📌 Lecture du graphique
+    - La taille médiane des feux augmente progressivement au fil des années.
+    - Cette tendance illustre l’intensification des incendies au fil du temps.
+    """)
 
     # 4️⃣ Distribution des causes par taille de feu
     st.subheader("Distribution des causes par taille de feu")
     fig5 = px.box(df, x='STAT_CAUSE_DESCR', y='FIRE_SIZE_HECT', log_y=True,
                   title="Distribution de la taille des feux par cause",
-                  color_discrete_sequence=['#2CA02C'])  # vert
+                  color_discrete_sequence=['#2CA02C'])
     st_plotly_fast(fig5, height=450)
-    st.write("Pour la plupart des incendies, la médiane est similaire quel que soit le type de cause, mais quelques feux très grands se produisent souvent suite à des orages ou négligences.")
-
-
+    st.markdown("""
+    ### 📌 Lecture du graphique
+    - Pour la plupart des incendies, la médiane est similaire quel que soit le type de cause.
+    - Quelques feux très grands se produisent souvent suite à des orages ou négligences.
+    """)
+  
 # --- PAGE ANALYSE TEMPORELLE (SOPHIE) ---
 elif page == "Analyse Temporelle":
     st.write("### Analyse temporelle des feux")
