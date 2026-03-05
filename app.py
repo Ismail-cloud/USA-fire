@@ -39,7 +39,7 @@ st.title("🔥 Analyse des feux de forêt aux Etats-Unis (1992-2015)")
 
 # Barre latérale pour la navigation
 st.sidebar.image("dessin feux foret.webp", use_container_width=True)
-page = st.sidebar.radio("Navigation", ["Accueil", "Analyse Temporelle", "Analyse de Sévérité", "Analyse par Localisation", "Analyse Météo", "Conclusion"])
+page = st.sidebar.radio("Navigation", ["Accueil", "Analyse temporelle", "Analyse de sévérité", "Analyse géographique", "Analyse météorologique", "Conclusion"])
 
 # --- PAGE ACCUEIL ---
 if page == "Accueil":
@@ -52,7 +52,8 @@ if page == "Accueil":
     Initialement consitué de 39 colonnes caractérisant les feux, nous n'en avons selectionné que 21 pertinentes pour l'analyse.\n
     En effet certaines étaient redondantes entre elles, ou trop incomplètes pour être utiles à notre analyse. \n
     Nous avons ensuite ajouté 3 colonnes contenant les données météorologiques (température, vitesse du vent et pluie) associées aux principaux Etats touchés par les feux.\n
-    Cette présentation a pour objectif d'expliquer les principales causes de ces feux de forêts.
+    Nous avons mené l'exploration suivant quatre axes : l'axe temporel, de sévérité, géographique et météorologique.\n
+
     """)
     
     st.info("Utilisez le menu à gauche pour naviguer entre les différents axes d'analyse.")
@@ -64,7 +65,7 @@ if page == "Accueil":
 
 
 
-elif page == "Analyse Météo":
+elif page == "Analyse météorologique":
     st.header("🌦️ Influence des conditions Météo")
     
     # Dictionnaire des noms d'états
@@ -185,7 +186,7 @@ elif page == "Analyse Météo":
         st.pyplot(fig3)
 
 # --- PAGE ANALYSE SEVERITE (ISMAIL) OPTIMISÉE ---
-elif page == "Analyse de Sévérité":
+elif page == "Analyse de sévérité":
     import plotly.io as pio
     import streamlit.components.v1 as components
     import plotly.express as px
@@ -314,7 +315,7 @@ elif page == "Analyse de Sévérité":
       
   
 
-elif page == "Analyse Temporelle":
+elif page == "Analyse temporelle":
     st.write("## Analyse temporelle des feux")
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
@@ -511,7 +512,7 @@ elif page == "Analyse Temporelle":
 
 
 # --- PAGE ANALYSE LOCALISATION (TIPHAINE) ---
-elif page == "Analyse par Localisation":
+elif page == "Analyse géographique":
 
     # 1️⃣ Hectares brûlés par État
     df_state = df.groupby("STATE", as_index=False).agg({"FIRE_SIZE_HECT": "sum"})
