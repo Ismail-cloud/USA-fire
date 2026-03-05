@@ -274,8 +274,9 @@ elif page == "Analyse de Sévérité":
     st_plotly_fast(fig4, height=400)
     st.markdown("""
     ### 📌 Lecture du graphique
-    - La taille médiane des feux augmente progressivement au fil des années.
-    - Cette tendance illustre l’intensification des incendies au fil du temps.
+    - La taille médiane des feux reste globalement stable entre 0,2 et 0,4 ha sur la période 1992–2015.
+    - Cela indique que la plupart des incendies sont de petite taille et sont rapidement maîtrisés.
+    - Les variations selon les années peuvent s’expliquer par les conditions climatiques ou la gestion des feux.
     """)
 
     # 4️⃣ Distribution des causes par taille de feu
@@ -294,8 +295,10 @@ elif page == "Analyse de Sévérité":
     st_plotly_fast(fig5, height=450)
     st.markdown("""
     ### 📌 Lecture du graphique
-    - Pour la plupart des incendies, la médiane est similaire quel que soit le type de cause.
-    - Quelques feux très grands se produisent souvent suite à des orages ou négligences.
+    - La majorité des feux sont de petite taille, indépendamment de la cause.
+    - Certaines causes (foudre, brûlage de débris, diverses causes) peuvent générer des incendies exceptionnellement grands.
+    - La distribution est très asymétrique : la plupart des feux restent petits, mais les outliers peuvent avoir un impact significatif.
+    - Ces points extrêmes doivent être pris en compte pour la planification et la prévention, car ils représentent les feux les plus destructeurs.
     """)
       
   
