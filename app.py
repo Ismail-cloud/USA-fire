@@ -304,17 +304,16 @@ elif page == "Analyse de Sévérité":
       
   
 
-# --- PAGE ANALYSE TEMPORELLE (SOPHIE) ---
 elif page == "Analyse Temporelle":
     st.write("## Analyse temporelle des feux")
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
 
     # 1️⃣ Evolution de la fréquence et taille des feux  par an
-
+    st.subheader("\n 1. Evolution de la fréquence et taille des feux  par an")
     st.write("""
-    ###### Nous possédons pour chaque feu de la base de données, sa date de déclaration ainsi que sa taille.
-    Nous pouvons donc analyser l'évolution de la fréquence et de la taille des feux sur les vingt-trois années de données.
+    Nous possédons pour chaque feu de la base de données, sa date de déclaration ainsi que sa taille. \n
+    Nous pouvons donc analyser l'évolution de la fréquence et de la taille des feux sur l'intégralité des vingt-trois années de données : 
     """) 
 
     #création d'un df taille par an :
@@ -326,16 +325,15 @@ elif page == "Analyse Temporelle":
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Histogram(x        = df['FIRE_YEAR'],
                                     name = "Fréquence des feux",
-                                   marker_color =  'rgb(241, 156, 124)',
-                                   marker_line = dict(width = 0.5)))
+                                   marker_color =  'rgb(254,178,76)',
+                                   ))
     fig.add_trace(go.Scatter(x        = df_year_size['FIRE_YEAR'],
                                  y        = df_year_size['FIRE_SIZE_HECT'],
                                  name = "Taille des feux",
-                                 line=dict(color='rgb(177, 63, 100)', width=4),
+                                 line=dict(color='rgb(128,0,38)', width=4),
                                  marker_line = dict(width = 0.5, color = 'black')),
                       secondary_y=True,)
-    fig.update_layout(title="Evolution de la fréquence et de la taille des feux par année",
-                          width=1500,
+    fig.update_layout(   width=1500,
                           height=500,
                           bargap=0.3)
     # Set x-axis title
@@ -351,19 +349,18 @@ elif page == "Analyse Temporelle":
     ###### 📌 Analyse : On constate une fréquence des feux par an globalement constante, mais avec des feux qui sont par contre de plus en plus sévères au fil du temps car de plus grande taille.
     """)
 
-    st.write( """❔Qu'en est-il maintenant de la répartition par mois ?
-    """)
+    
 
     # 2️⃣ Répartition des feux  par mois
-    st.subheader("Répartition des feux  par mois")
+    st.subheader("\n 2.Répartition de la fréquence des feux  par mois")
 
     df_month_qty=df.groupby(["DISCOVERY_MONTH"],as_index=False)["OBJECTID"].count()
 
     Bar_Month_Qty = px.bar(df_month_qty,
              x= 'DISCOVERY_MONTH',
              y = 'OBJECTID')
-    Bar_Month_Qty.update_traces(marker_color='rgb(241, 156, 124)')
-    Bar_Month_Qty.update_layout(title_text = "Fréquence des feux par mois cumulée sur les 23 années analysées",
+    Bar_Month_Qty.update_traces(marker_color='rgb(254,178,76)')
+    Bar_Month_Qty.update_layout(#title_text = "Fréquence des feux par mois cumulée sur les 23 années analysées",
                             xaxis_title  = "Mois",
                             yaxis_title = "Quantité de feux déclarés",
                             xaxis = dict(
@@ -376,10 +373,9 @@ elif page == "Analyse Temporelle":
 
     st.markdown("""
     ###### 📌 Analyse :  Lorsqu'on regarde cette répartition des fréquences de feux par mois de l'année, on constate que les feux de forêts ont lieu principalement au printemps et en été.
-    Mais qu'en est-il lorsqu'on analyse la répartition de leur taille ?
-    """)
+        """)
 
-
+    st.subheader("\n 3.Répartition de la taille des feux  par mois")
     df_month_size=df.groupby(["DISCOVERY_MONTH"],as_index=False)["FIRE_SIZE_HECT"].sum()
     df_month_size=df_month_size.sort_values(by='DISCOVERY_MONTH')
 
@@ -389,9 +385,9 @@ elif page == "Analyse Temporelle":
              x = 'DISCOVERY_MONTH',
              y = 'FIRE_SIZE_HECT',
              color = 'FIRE_SIZE_HECT',
-             color_continuous_scale=px.colors.sequential.Redor)
+             color_continuous_scale=px.colors.sequential.YlOrRd)
 
-    Bar_Month_Size.update_layout(title_text = "Somme des tailles des feux par mois sur les 23 années analysées",
+    Bar_Month_Size.update_layout(#title_text = "Somme des tailles des feux par mois sur les 23 années analysées",
                              xaxis_title  = "Mois",
                             yaxis_title = "Taille des feux en hectares",
                              legend_title = "Taille des feux en hectares",
@@ -408,8 +404,8 @@ elif page == "Analyse Temporelle":
     """)
 
     # 3️⃣ Analyse des causes par mois :
-    st.subheader("Analyse des causes par mois")
-
+    st.subheader("4. Analyse des causes par mois en fonction de leurs fréquences")
+ 
 
     import plotly.express as px
 
@@ -424,7 +420,7 @@ elif page == "Analyse Temporelle":
                                    color_discrete_map=c)
                                   #color_discrete_sequence=px.colors.qualitative.T10)
 
-    Rootcause_Month.update_layout(title_text = "Fréquence des feux par rootcause par mois sur les 23 années analysées",
+    Rootcause_Month.update_layout(#title_text = "Fréquence des feux par rootcause par mois sur les 23 années analysées",
                              xaxis_title  = "Mois",
                             yaxis_title = "Fréquence des feux",
                              legend_title = "Rootcause des feux",
@@ -448,7 +444,7 @@ elif page == "Analyse Temporelle":
 
 
     #4️⃣ Analyse cause par an
-    st.subheader("Analyse des causes par an")
+    st.subheader("5. Analyse des fréquences de causes par an")
 
     df_year_cause_size=df.groupby(["FIRE_YEAR", "STAT_CAUSE_DESCR"],as_index=False ).agg({"FIRE_SIZE_HECT" : "sum", "OBJECTID" : "count"})
     df_year_cause_size=df_year_cause_size.sort_values(by= "FIRE_YEAR")
@@ -462,7 +458,7 @@ elif page == "Analyse Temporelle":
                             color = "STAT_CAUSE_DESCR",
                             color_discrete_map=c)
 
-    year_cause_freq.update_layout(title='Evolution de la quantité de feux par rootcause et par an',
+    year_cause_freq.update_layout(#title='Evolution de la quantité de feux par rootcause et par an',
                                   xaxis_title='Année',
                                   yaxis_title='Quantité de feux',
                                   legend_title = "Rootcause des feux")
@@ -472,10 +468,11 @@ elif page == "Analyse Temporelle":
 
     st.markdown("""
     ###### 📌 Analyse : La hiérarchie au sein des causes est restée sensiblement la même au fil des années.
-    On ne voit pas de causes qui disparaissent ou d'autres qui apparaissent avec le temps.
-    Les causes principales sont « Debris Burning » suivi de « Arson » (incendie criminel) et « Lightning » (Orages).
+    ###### On ne voit pas de causes qui disparaissent ou d'autres qui apparaissent avec le temps.
+    ###### Les causes principales sont « Debris Burning » suivi de « Arson » (incendie criminel) et « Lightning » (Orages).
     """)
 
+    st.subheader("6. Analyse des causes par an en fonction de la taille des feux associées")
 
 
     plt.figure(figsize=[180,200])
@@ -485,7 +482,7 @@ elif page == "Analyse Temporelle":
                             color = "STAT_CAUSE_DESCR",
                             color_discrete_map=c)
 
-    year_cause_size.update_layout(title='Evolution de la taille des feux par rootcause et par an',
+    year_cause_size.update_layout(#title='Evolution de la taille des feux par rootcause et par an',
                                   xaxis_title='Année',
                                   yaxis_title='Taille des feux en hectare',
                                   legend_title = "Rootcause des feux")
@@ -494,8 +491,11 @@ elif page == "Analyse Temporelle":
     st.plotly_chart(year_cause_size)
     
     st.markdown("""
-    ###### 📌 Analyse : L’évolution de ces causes en taille de feux suit l’augmentation des feux de forêt au fil des années, les orages (Lightning) étant la cause principale.
+    ###### 📌 Analyse : L’évolution de ces causes en taille de feux suit l’augmentation des feux de forêt au fil des années, les orages (Lightning) étant la cause principale des grands feux d'été.
     """)
+
+
+    st.subheader("\n -> Regardons maintenant de plus près la taille des feux")
 
 
 
