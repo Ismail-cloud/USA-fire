@@ -40,6 +40,22 @@ st.title("🔥 Analyse des feux de forêt aux Etats-Unis (1992-2015)")
 # Barre latérale pour la navigation
 st.sidebar.image("dessin feux foret.webp", use_container_width=True)
 page = st.sidebar.radio("Navigation", ["Accueil", "Analyse temporelle", "Analyse de sévérité", "Analyse géographique", "Analyse météorologique", "Conclusion"])
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+
+st.sidebar.markdown("""Qui sommes nous ? \n
+Sophie BENCHAA \n
+Tiphaine BIHOUR\n
+Ismaïl BOUAZIZI\n
+Lucien GOUJON""")
+
 
 # --- PAGE ACCUEIL ---
 if page == "Accueil":
