@@ -47,9 +47,10 @@ if page == "Accueil":
     st.write("""
     Ce dashboard interactif permet d'explorer les facteurs influençant les incendies de forêt.\n
     Nous avons analysé les données historiques du service forestier américain recensant les feux entre 1992 et 2015.\n
-    Ce dataset est en libre accès sur la plateforme Kaggle et contient les caractéristiques de 1 880 465 feux sur cette période. \n
+    Le dataset source de notre travail est en libre accès sur la plateforme Kaggle et contient les caractéristiques de 1 880 465 feux sur cette période. \n
     Nous avons selectionné, nettoyé et transformé ces données pour les rendre exploitables. \n
     Initialement consitué de 39 colonnes caractérisant les feux, nous n'en avons selectionné que 21 pertinentes pour l'analyse.\n
+    En effet certaines étaient redondantes entre elles, ou trop incomplètes pour être utiles à notre analyse. \n
     Nous avons ensuite ajouté 3 colonnes contenant les données météorologiques (température, vitesse du vent et pluie) associées aux principaux Etats touchés par les feux.\n
     Cette présentation a pour objectif d'expliquer les principales causes de ces feux de forêts.
     """)
