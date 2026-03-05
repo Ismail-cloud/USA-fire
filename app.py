@@ -55,7 +55,7 @@ Sophie BENCHAA \n
 Tiphaine BIHOUR\n
 Ismaïl BOUAZIZI\n
 Lucien GOUJON""")
-
+st.sidebar.image("Liora.png", use_container_width=True)
 
 # --- PAGE ACCUEIL ---
 if page == "Accueil":
