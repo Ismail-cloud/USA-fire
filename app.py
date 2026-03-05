@@ -56,6 +56,10 @@ if page == "Accueil":
         st.dataframe(df.head(10))
 
 # --- PAGE ANALYSE MÉTÉO (LUCIEN) ---
+
+cmap = plt.get_cmap('YlOrRd')
+couleur_feu = cmap(0.6)
+
 elif page == "Analyse Météo":
     st.header("🌦️ Influence des conditions Météo")
     
@@ -108,7 +112,7 @@ elif page == "Analyse Météo":
         fig1, ax1 = plt.subplots(figsize=(10, 6))
         
         # Axe 1 : Température (Histogramme orange)
-        sns.histplot(df_filtered['temp_max'], bins=30, kde=True, color='YlOrRd', label='Température (°C)', ax=ax1)
+        sns.histplot(df_filtered['temp_max'], bins=30, kde=True, color=couleur_feu, label='Température (°C)', ax=ax1)
         ax1.set_xlabel('Température Maximale (°C)')
         ax1.set_ylabel('Nombre d\'incendies')
 
