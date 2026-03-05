@@ -505,7 +505,8 @@ elif page == "Analyse Temporelle":
     """)
 
 
-    st.subheader("\n -> Regardons maintenant de plus près la taille des feux")
+    st.subheader("\n -> Nous savons désormais quand et pourquoi interviennent les plus grands feux. \n ### Et si nous analysions maintenant plus précisemment la taille des feux ? ")
+
 
 
 
