@@ -55,7 +55,7 @@ Sophie BENCHAA \n
 Tiphaine BIHOUR\n
 Ismaïl BOUAZIZI\n
 Lucien GOUJON""")
-st.sidebar.image("Liora.png", use_container_width=True)
+st.sidebar.image("Liora.png", width=100)
 
 # --- PAGE ACCUEIL ---
 if page == "Accueil":
@@ -69,6 +69,7 @@ if page == "Accueil":
     En effet certaines étaient redondantes entre elles, ou trop incomplètes pour être utiles à notre analyse. \n
     Nous avons ensuite ajouté 3 colonnes contenant les données météorologiques (température, vitesse du vent et pluie) associées aux principaux Etats touchés par les feux.\n
     Nous avons mené l'exploration suivant quatre axes : l'axe temporel, de sévérité, géographique et météorologique.\n
+    Bonne lecture !\n
 
     """)
     
