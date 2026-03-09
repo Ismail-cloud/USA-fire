@@ -505,9 +505,31 @@ elif page == "Analyse temporelle":
 
 
 # --- PAGE ANALYSE LOCALISATION (TIPHAINE) ---
-elif page == "Analyse géographique":
+elif page == "Analyse par Localisation":
+    st.write("## Analyse géographique des feux")
 
-    # 1️⃣ Hectares brûlés par État
+    # 1️⃣ Hectares brûlés par région
+    st.subheader("\n 1. Analyse des hectares brûlés par région")
+
+    df_zone = df.groupby("REGION", as_index=False)["FIRE_SIZE_HECT"].sum().sort_values("FIRE_SIZE_HECT", ascending=False)
+    fig = px.bar(
+        df_zone,
+        x="REGION",
+        y="FIRE_SIZE_HECT",
+        text="FIRE_SIZE_HECT",
+        labels={"FIRE_SIZE_HECT":"Hectares brûlés", "REGION":"Région"},
+        color="FIRE_SIZE_HECT",
+        color_continuous_scale="YlOrRd"
+    )
+    st.plotly_chart(fig)
+    top_region = df_zone.iloc[0]
+    st.markdown("""
+    ###### 📌 Analyse : La région la plus touchée est la région Ouest avec environ 43 millions d'hectares brûlés. Les autres régions ont des surfaces brûlées beaucoup moins importantes, ce qui montre la concentration géographique des feux.
+    """)
+
+    # 2️⃣ Hectares brûlés par État
+    st.subheader("\n 2. Analyse des hectares brûlés par État")
+
     df_state = df.groupby("STATE", as_index=False).agg({"FIRE_SIZE_HECT": "sum"})
     fig = px.choropleth(
         df_state,
@@ -515,19 +537,18 @@ elif page == "Analyse géographique":
         locationmode="USA-states",
         color="FIRE_SIZE_HECT",
         scope="usa",
-        color_continuous_scale="Reds",
-        title="Hectares brûlés par État"
+        color_continuous_scale="YlOrRd",
     )
     st.plotly_chart(fig)
     max_state = df_state.loc[df_state["FIRE_SIZE_HECT"].idxmax(), "STATE"]
     max_value = df_state["FIRE_SIZE_HECT"].max()
-    st.markdown(f"""
-    ### 📌 Lecture du graphique
-    - L'État le plus touché est **{max_state}** avec **{int(max_value):,} hectares brûlés**.
-    - Les autres États présentent des surfaces brûlées beaucoup plus faibles, illustrant la concentration des incendies.
+    st.markdown("""
+    ###### 📌 Analyse : L'État le plus touché est L'Alaska avec 13 Millions d'hectares brûlés. Les autres États présentent des surfaces brûlées beaucoup plus faibles, ce qui montre la concentration des incendies.
     """)
 
-    # 2️⃣ Cause principale des feux par État
+    # 3️⃣ Cause principale des feux par État
+    st.subheader("\n 3. Analyse de la cause principale des feux par État")
+
     c = dict(zip(df["STAT_CAUSE_DESCR"].unique(), px.colors.qualitative.T10))
     df_region = df.groupby(['STATE', 'STAT_CAUSE_DESCR'], as_index=False).size().rename(columns={'size':'count'})
     df_major_cause = df_region.loc[df_region.groupby('STATE')['count'].idxmax()]
@@ -538,59 +559,69 @@ elif page == "Analyse géographique":
         color='STAT_CAUSE_DESCR',
         scope='usa',
         color_discrete_map=c,
-        title='Cause principale des feux par États'
     )
     st.plotly_chart(fig)
     st.markdown("""
-    ### 📌 Lecture du graphique
-    - Chaque État est coloré selon la cause la plus fréquente des incendies.
-    - On peut identifier rapidement si la foudre, l’activité humaine ou d’autres causes dominent.
-    """)
-
-    # 3️⃣ Hectares brûlés par région
-    df_zone = df.groupby("REGION", as_index=False)["FIRE_SIZE_HECT"].sum().sort_values("FIRE_SIZE_HECT", ascending=False)
-    fig = px.bar(
-        df_zone,
-        x="REGION",
-        y="FIRE_SIZE_HECT",
-        text="FIRE_SIZE_HECT",
-        title="Hectares brûlés par régions",
-        labels={"FIRE_SIZE_HECT":"Hectares brûlés", "REGION":"Région"},
-        color="FIRE_SIZE_HECT",
-        color_continuous_scale="Reds"
-    )
-    st.plotly_chart(fig)
-    top_region = df_zone.iloc[0]
-    st.markdown(f"""
-    ### 📌 Lecture du graphique
-    - La région la plus touchée est **{top_region['REGION']}** avec **{int(top_region['FIRE_SIZE_HECT']):,} hectares brûlés**.
-    - Les autres régions ont des surfaces brûlées beaucoup moins importantes, ce qui montre la concentration géographique des feux.
+    ###### 📌 Analyse : Chaque État est coloré selon la cause la plus fréquente des incendies. On peut identifier rapidement que la foudre et l'activité humaine (avec Debris burning) sont les causes principales.
     """)
     
     # 4️⃣ Durée moyenne des feux par État
-    if pd.api.types.is_timedelta64_dtype(df['FIRE_DURATION']):
-        df['FIRE_DURATION_DAYS'] = df['FIRE_DURATION'].dt.days
-    else:
-        df['FIRE_DURATION_DAYS'] = np.nan
-        
+    st.subheader("\n 4. Analyse de la durée moyenne des feux par État")
+
+    df['FIRE_DURATION'] = pd.to_timedelta(df['FIRE_DURATION'], errors='coerce')
+    df['FIRE_DURATION_DAYS'] = df['FIRE_DURATION'].dt.total_seconds() / (24*3600)
+    df['FIRE_DURATION_DAYS'] = df['FIRE_DURATION_DAYS'].fillna(0)
+
     df_state_duration = df.groupby('STATE', as_index=False)['FIRE_DURATION_DAYS'].mean()
+
     fig = px.choropleth(
-        df_state_duration,
-        locations='STATE',
-        locationmode='USA-states',
-        color='FIRE_DURATION_DAYS',
-        scope='usa',
-        color_continuous_scale='YlOrBr',
-        labels={'FIRE_DURATION_DAYS': 'Durée moyenne (jours)'},
-        title='Durée moyenne des feux par État'
+    df_state_duration,
+    locations='STATE',
+    locationmode='USA-states',
+    color='FIRE_DURATION_DAYS',
+    scope='usa',
+    color_continuous_scale='YlOrRd',
+    labels={'FIRE_DURATION_DAYS': 'Durée moyenne (jours)'},
+    title='Durée moyenne des feux par État'
     )
     st.plotly_chart(fig)
+
     st.markdown("""
-    ### 📌 Lecture du graphique
-    - Chaque État est coloré selon la durée moyenne des feux.
-    - Permet d’identifier les États où les incendies sont fréquents et prolongés.
-    - Ces informations sont utiles pour la planification et la prévention.
+    ###### 📌 Analyse : Chaque État est coloré selon la durée moyenne des feux. Cela nous permet d’identifier les États où les incendies sont fréquents et prolongés. 
+    # Ces informations sont utiles pour la planification et la prévention.
     """)
+
+    import streamlit as st
+    import os
+
+    st.subheader("\n 5. Cartographie forestière et désertique des USA")
+
+    image_path = os.path.join(os.path.dirname(__file__), "cartographieusa.jpg")
+
+    # Affichage de l'image avec largeur maximale
+    st.image(image_path, caption="https://super-duper.fr/country/usa.php", width=800)
+    
+    st.markdown("""
+    ###### 📌 Analyse : Cette carte nous montre la répartition géographique des forêts aux États-Unis, ce qui nous permet de visualiser les zones les plus vulnérables aux incendies.
+    """)
+
+    import streamlit as st
+    import os
+
+    st.subheader("\n 6. Cartographie des climats des USA")
+
+    image_path = os.path.join(os.path.dirname(__file__), "Localisation - climats-etats-unis.jpg")
+
+    # Affichage de l'image avec largeur maximale
+    st.image(image_path, caption="https://www.climatsetvoyages.com/cllmat/etats-unis", width=800)
+    
+    st.markdown("""
+    ###### 📌 Analyse : Voici une représentation des climats aux États-Unis, ce qui nous permet de de voir si les conditions météorologiques qui influencent la propagation des incendies.
+    """)
+
+    st.subheader("\n ->  Nous pouvons maintenant nous demander si les conditions météorologiques jouent un rôle dans la localisation des feux de forêt ?")
+
+
     
     # --- PAGE CONCLUSION ---
 elif page == "Conclusion":
