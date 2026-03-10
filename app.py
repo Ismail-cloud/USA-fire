@@ -505,7 +505,7 @@ elif page == "Analyse temporelle":
 
 
 # --- PAGE ANALYSE LOCALISATION (TIPHAINE) ---
-elif page == "Analyse par Localisation":
+elif page == "Analyse géographique":
     st.write("## Analyse géographique des feux")
 
     # 1️⃣ Hectares brûlés par région
