@@ -352,12 +352,12 @@ elif page == "Analyse temporelle":
     ###### 📌 Analyse : 
     - On constate une fréquence des feux par an globalement constante
     - En revanche les feux sont de plus en plus sévères au fil du temps, la surface brulée suit une courbe en croissance.
-    """)
+    \n \n """)
 
     
 
     # 2️⃣ Répartition des feux  par mois
-    st.subheader("\n 2.Y a t-il des mois qui concentrent le plus de feux ?")
+    st.subheader("\n 2. Y a t-il des mois qui concentrent le plus de feux ?")
 
     df_month_qty=df.groupby(["DISCOVERY_MONTH"],as_index=False)["OBJECTID"].count()
 
@@ -381,9 +381,9 @@ elif page == "Analyse temporelle":
     On constate deux saisons principales pour l'apparition des feux de forêt : 
     - Au printemps (mars/avril)
     - En été (juillet/aout)
-        """)
+     \n \n   """)
 
-    st.subheader("\n 3.Est-ce que cette périodicité mensuelle est la même si on regarde la taille des feux ")
+    st.subheader("\n 3. Est-ce que cette périodicité mensuelle est la même si on regarde la taille des feux ")
     df_month_size=df.groupby(["DISCOVERY_MONTH"],as_index=False)["FIRE_SIZE_HECT"].sum()
     df_month_size=df_month_size.sort_values(by='DISCOVERY_MONTH')
 
@@ -410,7 +410,7 @@ elif page == "Analyse temporelle":
     st.markdown("""
     ###### 📌 Analyse : 
     Il est flagrant de constater que c'est seulement l'été que l'on trouve les feux de plus grande taille.
-    """)
+    \n \n """)
 
     # 3️⃣ Analyse des causes par mois :
     st.subheader("4. Quelles sont les principales causes pour chaque mois ?")
@@ -446,7 +446,7 @@ elif page == "Analyse temporelle":
     Les causes principales diffèrent suivant les saisons : 
     - Au printemps : Déchets brulés (Debris Burning)
     - En été : Orages (Lightning)
-    """)
+    \n """)
 
     st.warning("""
     **Pour compléter :** Il est intéressant de constater d'autres saisonalités dans ce visuel.
@@ -483,9 +483,9 @@ elif page == "Analyse temporelle":
     - La hiérarchie au sein des causes est restée sensiblement la même au fil des années.
     - On ne voit pas de causes qui disparaissent ou d'autres qui apparaissent avec le temps.
     - Les causes principales sont « Debris Burning » suivi de « Arson » (incendie criminel) et « Lightning » (Orages).
-    """)
+    \n \n """)
 
-    st.subheader("6. Comment ont évolué les causes au fil des années si on regarde par taille de feux ? ")
+    st.subheader("6. Et si on regarde la taille de feux, qu'en est-il de cette hiérarchie des causes au fil du temps ?")
 
 
     plt.figure(figsize=[180,200])
@@ -507,7 +507,7 @@ elif page == "Analyse temporelle":
     ###### 📌 Analyse : 
     - L’évolution de ces causes en taille de feux suit l’augmentation des feux de forêt au fil des années.
     - Les orages (Lightning) sont la cause principale des grands feux d'été.
-    """)
+    \n \n """)
 
 
     st.subheader("\n -> Nous savons désormais quand et pourquoi interviennent les plus grands feux. \n ### Et si nous analysions maintenant plus précisemment la taille des feux ? ")
