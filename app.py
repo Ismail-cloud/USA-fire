@@ -365,7 +365,7 @@ elif page == "Analyse temporelle":
              x= 'DISCOVERY_MONTH',
              y = 'OBJECTID')
     Bar_Month_Qty.update_traces(marker_color='rgb(254,178,76)')
-    Bar_Month_Qty.update_layout(#title_text = "Fréquence des feux par mois cumulée sur les 23 années analysées",
+    Bar_Month_Qty.update_layout(title_text = "Fréquence des feux par mois cumulée sur les 23 années analysées",
                             xaxis_title  = "Mois",
                             yaxis_title = "Quantité de feux déclarés",
                             xaxis = dict(
@@ -395,7 +395,7 @@ elif page == "Analyse temporelle":
              color = 'FIRE_SIZE_HECT',
              color_continuous_scale=px.colors.sequential.YlOrRd)
 
-    Bar_Month_Size.update_layout(#title_text = "Somme des tailles des feux par mois sur les 23 années analysées",
+    Bar_Month_Size.update_layout(title_text = "Somme des tailles des feux par mois sur les 23 années analysées",
                              xaxis_title  = "Mois",
                             yaxis_title = "Taille des feux en hectares",
                              legend_title = "Taille des feux en hectares",
@@ -429,7 +429,7 @@ elif page == "Analyse temporelle":
                                    color_discrete_map=c)
                                   #color_discrete_sequence=px.colors.qualitative.T10)
 
-    Rootcause_Month.update_layout(#title_text = "Fréquence des feux par rootcause par mois sur les 23 années analysées",
+    Rootcause_Month.update_layout(title_text = "Fréquence des feux par cause par mois sur les 23 années analysées",
                              xaxis_title  = "Mois",
                             yaxis_title = "Fréquence des feux",
                              legend_title = "Rootcause des feux",
@@ -470,7 +470,7 @@ elif page == "Analyse temporelle":
                             color = "STAT_CAUSE_DESCR",
                             color_discrete_map=c)
 
-    year_cause_freq.update_layout(#title='Evolution de la quantité de feux par rootcause et par an',
+    year_cause_freq.update_layout(title='Evolution de la quantité de feux par cause et par an',
                                   xaxis_title='Année',
                                   yaxis_title='Quantité de feux',
                                   legend_title = "Rootcause des feux")
@@ -495,7 +495,7 @@ elif page == "Analyse temporelle":
                             color = "STAT_CAUSE_DESCR",
                             color_discrete_map=c)
 
-    year_cause_size.update_layout(#title='Evolution de la taille des feux par rootcause et par an',
+    year_cause_size.update_layout(title='Evolution de la taille des feux par cause et par an',
                                   xaxis_title='Année',
                                   yaxis_title='Taille des feux en hectare',
                                   legend_title = "Rootcause des feux")
