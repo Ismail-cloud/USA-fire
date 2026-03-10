@@ -46,7 +46,6 @@ st.sidebar.markdown(""" \n""")
 st.sidebar.markdown(""" \n""")
 st.sidebar.markdown(""" \n""")
 st.sidebar.markdown(""" \n""")
-st.sidebar.markdown(""" \n""")
 
 
 st.sidebar.markdown("""Qui sommes nous ? \n
@@ -314,7 +313,7 @@ elif page == "Analyse temporelle":
     from plotly.subplots import make_subplots
 
     # 1️⃣ Evolution de la fréquence et taille des feux  par an
-    st.subheader("\n 1. Evolution de la fréquence et taille des feux  par an")
+    st.subheader("\n 1. Comment a évolué le nombre et la taille des feux au fil des années ? ")
     st.write("""
     Nous possédons pour chaque feu de la base de données, sa date de déclaration ainsi que sa taille. \n
     Nous pouvons donc analyser l'évolution de la fréquence et de la taille des feux sur l'intégralité des vingt-trois années de données : 
@@ -350,7 +349,9 @@ elif page == "Analyse temporelle":
     st.plotly_chart(fig)
 
     st.write("""
-    ###### 📌 Analyse : On constate une fréquence des feux par an globalement constante, mais avec des feux qui sont par contre de plus en plus sévères au fil du temps car de plus grande taille.
+    ###### 📌 Analyse : 
+    - On constate une fréquence des feux par an globalement constante
+    - En revanche les feux sont de plus en plus sévères au fil du temps, la surface brulée suit une courbe en croissance.
     """)
 
     
