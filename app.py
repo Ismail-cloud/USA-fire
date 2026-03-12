@@ -577,6 +577,11 @@ elif page == "Analyse géographique":
         color="FIRE_SIZE_HECT",
         color_continuous_scale="YlOrRd"
     )
+    fig.update_layout(title_text = "Hectares brûlés par région (1992-2015)",
+                      title_font_style= "italic",
+                      width=1500,
+                          height=500,
+                          bargap=0.3)
     st.plotly_chart(fig)
     top_region = df_zone.iloc[0]
     st.markdown("""
@@ -597,6 +602,11 @@ elif page == "Analyse géographique":
         scope="usa",
         color_continuous_scale="YlOrRd",
     )
+    fig.update_layout(title_text = "Hectares brûlés par État (1992-2015)",
+                      title_font_style= "italic",
+                      width=1500,
+                          height=500,
+                          bargap=0.3)
     st.plotly_chart(fig)
     max_state = df_state.loc[df_state["FIRE_SIZE_HECT"].idxmax(), "STATE"]
     max_value = df_state["FIRE_SIZE_HECT"].max()
@@ -620,6 +630,11 @@ elif page == "Analyse géographique":
         scope='usa',
         color_discrete_map=c,
     )
+    fig.update_layout(title_text = "Cause principale des feux par État (1992-2015)",
+                      title_font_style= "italic",
+                      width=1500,
+                          height=500,
+                          bargap=0.3)
     st.plotly_chart(fig)
     st.markdown("""
     ###### 📌 Analyse : 
@@ -646,6 +661,11 @@ elif page == "Analyse géographique":
     labels={'FIRE_DURATION_DAYS': 'Durée moyenne (jours)'},
     title='Durée moyenne des feux par État'
     )
+    fig.update_layout(title_text = "Durée moyenne des feux par État (1992-2015)",
+                      title_font_style= "italic",
+                      width=1500,
+                          height=500,
+                          bargap=0.3)
     st.plotly_chart(fig)
 
     st.markdown("""
@@ -670,7 +690,7 @@ elif page == "Analyse géographique":
 
     st.subheader("\n 6. Quelle est la cartographie des climats des USA ?")
 
-    image_path = os.path.join(os.path.dirname(__file__), "https://www.climatsetvoyages.com/cllmat/etats-unis")
+    image_path = os.path.join(os.path.dirname(__file__), "carte_climat_usa_legende_droite_v2.jpg")
 
     # Affichage de l'image avec largeur maximale
     st.image(image_path, caption="https://www.climatsetvoyages.com/cllmat/etats-unis", width=800)
