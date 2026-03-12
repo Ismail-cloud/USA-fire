@@ -194,7 +194,7 @@ elif page == "Analyse météorologique":
     with col_top2:
         st.write("\n" * 2) 
         st.write("""
-        ###### 📌 Réponse visuelle : 
+        ###### 📌 Analyse : 
         - **Le seuil critique :** On observe une explosion du nombre de feux dès que la température dépasse les **25°C**.
         - **Le facteur humidité :** La courbe bleue montre que la densité d'incendies est maximale quand les précipitations sont à **0mm**. 
         - **Conclusion :** Le stress hydrique de la végétation (basse humidité) combiné à une forte chaleur constitue le "cocktail explosif" idéal pour le départ d'un feu.
@@ -239,7 +239,7 @@ elif page == "Analyse météorologique":
         st.pyplot(fig3)
 
     st.markdown("""
-    ###### 📌 Réponse visuelle : 
+    ###### 📌 Analyse : 
     - **Le vent, moteur de propagation :** Si le premier graphique montre que beaucoup de feux naissent par vent faible, le second révèle que les **incendies les plus vastes** (en sombre) surviennent lorsque le vent forcit.
     - **L'effet couloir :** Un vent soutenu (> 20-30 km/h) couplé à une forte température empêche l'extinction rapide et favorise les sautes de feu.
     """)
