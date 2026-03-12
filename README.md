@@ -2,6 +2,8 @@
 Projet de data analyse basé sur les donnée provenant de Kaggle sur les feux de forêts aux USA
 https://www.kaggle.com/datasets/rtatman/188-million-us-wildfires
 
+Le Dashboard interactif est accessible sur streamlit: https://usa-fire-hnvb93cctzgdbrftgqc6by.streamlit.app/
+
 
 Nous avons analysé les données historiques du service forestier américain recensant les feux entre 1992 et 2015.
 
