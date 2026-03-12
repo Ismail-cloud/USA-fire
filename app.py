@@ -348,7 +348,7 @@ elif page == "Analyse de sévérité":
     st.markdown("""
     ###### 📌 Analyse : 
     - La majorité des feux sont de petite taille, indépendamment de la cause.
-    - Certaines causes (foudre, brûlage de débris, diverses causes) peuvent générer des incendies exceptionnellement grands.
+    - Certaines causes (foudre, cigarette, diverses causes) peuvent générer des incendies exceptionnellement grands.
     - La distribution est très asymétrique : la plupart des feux restent petits, mais les outliers peuvent avoir un impact significatif.
     - Ces points extrêmes doivent être pris en compte pour la planification et la prévention, car ils représentent les feux les plus destructeurs.
     """)
