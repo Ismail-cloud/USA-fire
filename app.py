@@ -108,7 +108,7 @@ st.sidebar.markdown(
         """, unsafe_allow_html=True
     )
 
-st.sidebar.image("Liora.png", width=80)
+st.sidebar.image("liora_logo_transparent_fixed.png", width=80)
 st.markdown("""
     <style>
     [data-testid="stSidebar"] [data-testid="stImage"] {
