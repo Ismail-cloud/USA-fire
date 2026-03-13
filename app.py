@@ -53,8 +53,7 @@ st.sidebar.markdown(""" \n""")
 st.sidebar.markdown(""" \n""")
 st.sidebar.markdown(""" \n""")
 st.sidebar.markdown(""" \n""")
-st.sidebar.markdown(""" \n""")
-st.sidebar.markdown(""" \n""")
+
 
 
 st.sidebar.markdown("""
