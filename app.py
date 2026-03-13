@@ -296,6 +296,88 @@ elif page == "Analyse de sévérité":
     def st_plotly_fast(fig, height=500):
         """Affiche un graphique Plotly via HTML pour réduire la surcharge Streamlit"""
         components.html(pio.to_html(fig, include_plotlyjs='cdn', full_html=False), height=height)
+    
+# --- Section tendance annuelle de la taille médiane---
+    # Tendance de la sévérité par année
+    st.subheader("1. Quelle est la tendance annuelle de la taille médiane des feux?")
+    df_year = df.groupby('FIRE_YEAR')['FIRE_SIZE_HECT'].median().reset_index()
+    fig4 = px.line(
+        df_year,
+        x='FIRE_YEAR',
+        y='FIRE_SIZE_HECT',
+        title="Tendance annuelle de la taille médiane des feux",
+        markers=True,
+        line_shape='linear',
+        color_discrete_sequence=['rgb(128,0,38)']
+    )
+    st_plotly_fast(fig4, height=400)
+    st.markdown("""
+    ###### 📌 Analyse : 
+    - La taille médiane des feux reste globalement stable entre 0,2 et 0,4 ha sur la période 1992–2015.
+    - Cela indique que la plupart des incendies sont de petite taille et sont rapidement maîtrisés.
+    - Les variations selon les années peuvent s’expliquer par les conditions climatiques ou la gestion des feux.
+    """)
+
+# --- Section top 3 des causes de feux --
+    st.subheader("2. Quelles causes provoquent le plus de surface brûlée ?")
+
+    # palette commune
+    c = dict(zip(df["STAT_CAUSE_DESCR"].unique(), px.colors.qualitative.T10))
+
+    # surface totale brûlée par cause
+    df_surface = (
+        df.groupby("STAT_CAUSE_DESCR")["FIRE_SIZE_HECT"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(3)
+        .reset_index()
+    )
+
+    fig_surface = px.bar(
+        df_surface,
+        x="STAT_CAUSE_DESCR",
+        y="FIRE_SIZE_HECT",
+        color="STAT_CAUSE_DESCR",
+        title="Top 3 des causes d'incendies par surface brûlée",
+        color_discrete_map=c
+    )
+
+    fig_surface.update_layout(
+        xaxis_title="Cause de l'incendie",
+        yaxis_title="Surface totale brûlée (hectares)",
+        showlegend=False
+    )
+
+    st_plotly_fast(fig_surface, height=400)
+
+    st.markdown("""
+    ###### 📌 Analyse :
+    - Certaines causes d'incendies, bien que moins fréquentes, peuvent générer des feux beaucoup plus destructeurs.
+    - Les incendies d'origine naturelle comme la foudre sont souvent associés à des feux de grande ampleur.
+    - Cela s’explique notamment par le fait qu’ils surviennent souvent dans des zones isolées où la détection et l’intervention sont plus difficiles.
+    """)    
+# --- Section Distribution des causes par taille de feu ---
+    # Distribution des causes par taille de feu
+    from PIL import Image
+
+    # --- Question posée comme subheader ---
+    st.subheader("3. Quelle est la distribution des causes par taille de feu?")
+
+    st.markdown(
+        "<p style='text-align: center; font-size:18px; color:black; margin-bottom:0;'>Distribution de la taille des feux par cause</p>",
+        unsafe_allow_html=True
+    )
+
+    img = Image.open("boxplot_causes.png")
+    st.image(img, use_container_width=True)
+
+    st.markdown("""
+    ###### 📌 Analyse : 
+    - La majorité des feux sont de petite taille, indépendamment de la cause.  
+    - Certaines causes peuvent générer des incendies exceptionnellement grands.  
+    - La distribution est très asymétrique : la plupart des feux restent petits, mais les outliers peuvent avoir un impact significatif.  
+    - Ces points extrêmes doivent être pris en compte pour la planification et la prévention.
+    """)
 
     # --- Explication des classes de feux ---
     st.markdown("#### 📌 Classement des feux par taille")
@@ -320,7 +402,7 @@ elif page == "Analyse de sévérité":
     col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader("1. Quel est le nombre de feux par classe?")
+        st.subheader("4. Quel est le nombre de feux par classe?")
         df_class = df['FIRE_SIZE_CLASS'].value_counts().sort_index().reset_index()
         df_class.columns = ['FIRE_SIZE_CLASS','count']
         fig2 = px.bar(
@@ -338,7 +420,7 @@ elif page == "Analyse de sévérité":
         """)
 
     with col2:
-        st.subheader("2. Quelle est la surface totale brûlée par classe?")
+        st.subheader("5. Quelle est la surface totale brûlée par classe?")
         df_sum = df.groupby('FIRE_SIZE_CLASS')['FIRE_SIZE_HECT'].sum().sort_index().reset_index()
         fig3 = px.bar(
             df_sum,
@@ -353,52 +435,6 @@ elif page == "Analyse de sévérité":
         - Les classes F et G, bien que rares, représentent la majorité de la surface brûlée.
         - Les classes A à D contribuent peu à la surface totale malgré leur fréquence.
         """)
-
-    # 3️⃣ Tendance de la sévérité par année
-    st.subheader("3. Quelle est la tendance annuelle de la taille médiane des feux?")
-    df_year = df.groupby('FIRE_YEAR')['FIRE_SIZE_HECT'].median().reset_index()
-    fig4 = px.line(
-        df_year,
-        x='FIRE_YEAR',
-        y='FIRE_SIZE_HECT',
-        title="Tendance annuelle de la taille médiane des feux",
-        markers=True,
-        line_shape='linear',
-        color_discrete_sequence=['rgb(128,0,38)']
-    )
-    st_plotly_fast(fig4, height=400)
-    st.markdown("""
-    ###### 📌 Analyse : 
-    - La taille médiane des feux reste globalement stable entre 0,2 et 0,4 ha sur la période 1992–2015.
-    - Cela indique que la plupart des incendies sont de petite taille et sont rapidement maîtrisés.
-    - Les variations selon les années peuvent s’expliquer par les conditions climatiques ou la gestion des feux.
-    """)
-
-    # 4️⃣ Distribution des causes par taille de feu
-    from PIL import Image
-
-    st.subheader("4. Distribution des causes par taille de feu")
-
-    # Affichage du PNG généré
-    img = Image.open("boxplot_causes.png")
-
-    # Titre centré
-    st.markdown(
-        "<h3 style='text-align: center; color: black;'>Distribution de la taille des feux par cause</h3>",
-        unsafe_allow_html=True
-    )
-
-    # Image avec largeur ajustée au container
-    st.image(img, use_container_width=True)
-
-    # Analyse du graphique
-    st.markdown("""
-    ###### 📌 Analyse : 
-    La majorité des feux sont de petite taille, indépendamment de la cause.  
-    Certaines causes (foudre, feu de camp, diverses causes) peuvent générer des incendies exceptionnellement grands.  
-    La distribution est très asymétrique : la plupart des feux restent petits, mais les outliers peuvent avoir un impact significatif.  
-    Ces points extrêmes doivent être pris en compte pour la planification et la prévention, car ils représentent les feux les plus destructeurs.
-    """)
 
     st.subheader("\n -> Maintenant qu'on a vu la sévérité selon la taille et la cause : quelles régions concentrent ces incendies ? ")
 
