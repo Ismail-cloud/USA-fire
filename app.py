@@ -335,6 +335,7 @@ elif page == "Analyse de sévérité":
     # 4️⃣ Distribution des causes par taille de feu
     df_sample = df.sample(20000)
     st.subheader("4. Quelle est la distribution des causes par taille de feu?")
+    c = dict(zip(df["STAT_CAUSE_DESCR"].unique(), px.colors.qualitative.T10))
     fig5 = px.box(
         df_sample,
         x='STAT_CAUSE_DESCR',
@@ -342,13 +343,14 @@ elif page == "Analyse de sévérité":
         log_y=True,
         title="Distribution de la taille des feux par cause",
         color='STAT_CAUSE_DESCR',
-        color_discrete_sequence=px.colors.qualitative.T10
+        color_discrete_map=c,
+        category_orders={"STAT_CAUSE_DESCR": sorted(df["STAT_CAUSE_DESCR"].unique())}
     )
     st_plotly_fast(fig5, height=450)
     st.markdown("""
     ###### 📌 Analyse : 
     - La majorité des feux sont de petite taille, indépendamment de la cause.
-    - Certaines causes (foudre, feu de camp, diverses causes) peuvent générer des incendies exceptionnellement grands.
+    - Certaines causes peuvent générer des incendies exceptionnellement grands.
     - La distribution est très asymétrique : la plupart des feux restent petits, mais les outliers peuvent avoir un impact significatif.
     - Ces points extrêmes doivent être pris en compte pour la planification et la prévention, car ils représentent les feux les plus destructeurs.
     """)
