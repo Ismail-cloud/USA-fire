@@ -59,11 +59,54 @@ st.sidebar.markdown(""" \n""")
 
 st.sidebar.markdown("""
                     <p style="line-height: 1.2; margin: 0;">Qui sommes nous ? </p>
-                    <p style="line-height: 1.2; margin: 0;">🔥 Sophie BENCHAA</p>
-                    <p style="line-height: 1.2; margin: 0;">🔥 Tiphaine BIHOUR</p>
-                    <p style="line-height: 1.2; margin: 0;">🔥 Ismaïl BOUAZIZI</p>
-                    <p style="line-height: 1.2; margin: 0;">🔥 Lucien GOUJON</p>
                     """, unsafe_allow_html=True)
+st.sidebar.markdown(
+        """<p style="line-height: 1.2; margin: 0;">
+        <a href="https://www.linkedin.com/in/sophie-benchaa-3a560212/" target="_blank"
+           style="display:flex;align-items:center;gap:8px;
+                 text-decoration:none;color:#0A66C2;">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@9/icons/linkedin.svg"
+             width="18" style="filter:invert(30%) sepia(1) hue-rotate(180deg)"/>
+          Sophie BENCHAA
+        </a>
+        """, unsafe_allow_html=True
+    )
+
+st.sidebar.markdown(
+        """<p style="line-height: 1.2; margin: 0;">
+        <a href="https://www.linkedin.com/in/tiphaine-bihour-734505a0/" target="_blank"
+           style="display:flex;align-items:center;gap:8px;
+                 text-decoration:none;color:#0A66C2;">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@9/icons/linkedin.svg"
+             width="18" style="filter:invert(30%) sepia(1) hue-rotate(180deg)"/>
+          Tiphaine BIHOUR
+        </a>
+        """, unsafe_allow_html=True
+    )
+
+st.sidebar.markdown(
+        """<p style="line-height: 1.2; margin: 0;">
+        <a href="https://www.linkedin.com/in/ismaïl-bouazizi-8a1727216/" target="_blank"
+           style="display:flex;align-items:center;gap:8px;
+                 text-decoration:none;color:#0A66C2;">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@9/icons/linkedin.svg"
+             width="18" style="filter:invert(30%) sepia(1) hue-rotate(180deg)"/>
+          Ismaïl BOUAZIZI
+        </a>
+        """, unsafe_allow_html=True
+    )
+
+st.sidebar.markdown(
+        """<p style="line-height: 1.2; margin: 0;">
+        <a href="https://www.linkedin.com/in/lucien-goujon/" target="_blank"
+           style="display:flex;align-items:center;gap:8px;
+                 text-decoration:none;color:#0A66C2;">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@9/icons/linkedin.svg"
+             width="18" style="filter:invert(30%) sepia(1) hue-rotate(180deg)"/>
+          Lucien GOUJON
+        </a>
+        """, unsafe_allow_html=True
+    )
 
 st.sidebar.image("Liora.png", width=80)
 st.markdown("""
