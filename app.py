@@ -692,7 +692,7 @@ elif page == "Analyse géographique":
     st.markdown("""
     ###### 📌 Analyse : 
     - Cette carte nous montre la répartition géographique des forêts aux États-Unis
-    - Cela qui nous permet de visualiser les zones les plus vulnérables aux incendies.
+    - Cela nous permet de visualiser les zones les plus vulnérables aux incendies.
     """)
 
     st.subheader("\n 6. Quelle est la cartographie des climats des USA ?")
@@ -705,7 +705,7 @@ elif page == "Analyse géographique":
     st.markdown("""
     ###### 📌 Analyse : 
     - Cette carte permet de visualiser les différents climats aux États-Unis 
-    - Cela  les conditions météorologiques qui influencent la propagation des incendies.
+    - Nous pouvons voir quelles sont les conditions météorologiques qui influencent sur la propagation des incendies.
     """)
 
     st.subheader("\n ->  Nous pouvons maintenant nous demander si les conditions météorologiques jouent un rôle dans la localisation des feux de forêt ?")
