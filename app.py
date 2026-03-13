@@ -375,26 +375,29 @@ elif page == "Analyse de sévérité":
     """)
 
     # 4️⃣ Distribution des causes par taille de feu
-    df_sample = df.sample(20000)
-    st.subheader("4. Quelle est la distribution des causes par taille de feu?")
-    c = dict(zip(df["STAT_CAUSE_DESCR"].unique(), px.colors.qualitative.T10))
-    fig5 = px.box(
-        df_sample,
-        x='STAT_CAUSE_DESCR',
-        y='FIRE_SIZE_HECT',
-        log_y=True,
-        title="Distribution de la taille des feux par cause",
-        color='STAT_CAUSE_DESCR',
-        color_discrete_map=c,
-        category_orders={"STAT_CAUSE_DESCR": sorted(df["STAT_CAUSE_DESCR"].unique())}
+    from PIL import Image
+
+    st.subheader("4. Distribution des causes par taille de feu")
+
+    # Affichage du PNG généré
+    img = Image.open("boxplot_causes.png")
+
+    # Titre centré
+    st.markdown(
+        "<h3 style='text-align: center; color: black;'>Distribution de la taille des feux par cause</h3>",
+        unsafe_allow_html=True
     )
-    st_plotly_fast(fig5, height=450)
+
+    # Image avec largeur ajustée au container
+    st.image(img, use_container_width=True)
+
+    # Analyse du graphique
     st.markdown("""
     ###### 📌 Analyse : 
-    - La majorité des feux sont de petite taille, indépendamment de la cause.
-    - Certaines causes peuvent générer des incendies exceptionnellement grands.
-    - La distribution est très asymétrique : la plupart des feux restent petits, mais les outliers peuvent avoir un impact significatif.
-    - Ces points extrêmes doivent être pris en compte pour la planification et la prévention, car ils représentent les feux les plus destructeurs.
+    La majorité des feux sont de petite taille, indépendamment de la cause.  
+    Certaines causes (foudre, feu de camp, diverses causes) peuvent générer des incendies exceptionnellement grands.  
+    La distribution est très asymétrique : la plupart des feux restent petits, mais les outliers peuvent avoir un impact significatif.  
+    Ces points extrêmes doivent être pris en compte pour la planification et la prévention, car ils représentent les feux les plus destructeurs.
     """)
 
     st.subheader("\n -> Maintenant qu'on a vu la sévérité selon la taille et la cause : quelles régions concentrent ces incendies ? ")
