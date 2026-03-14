@@ -46,35 +46,115 @@ st.sidebar.markdown(""" \n""")
 st.sidebar.markdown(""" \n""")
 st.sidebar.markdown(""" \n""")
 st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
+st.sidebar.markdown(""" \n""")
 
 
-st.sidebar.markdown("""Qui sommes nous ? \n
-Sophie BENCHAA \n
-Tiphaine BIHOUR\n
-Ismaïl BOUAZIZI\n
-Lucien GOUJON""")
-st.sidebar.image("Liora.png", width=100)
 
+st.sidebar.markdown("""
+                    <p style="line-height: 1.2; margin: 0;">Qui sommes nous ? </p>
+                    """, unsafe_allow_html=True)
+st.sidebar.markdown(
+        """<p style="line-height: 1.2; margin: 0;">
+        <a href="https://www.linkedin.com/in/sophie-benchaa-3a560212/" target="_blank"
+           style="display:flex;align-items:center;gap:8px;
+                 text-decoration:none;color:#0A66C2;">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@9/icons/linkedin.svg"
+             width="18" style="filter:invert(30%) sepia(1) hue-rotate(180deg)"/>
+          Sophie BENCHAA
+        </a>
+        """, unsafe_allow_html=True
+    )
+
+st.sidebar.markdown(
+        """<p style="line-height: 1.2; margin: 0;">
+        <a href="https://www.linkedin.com/in/tiphaine-bihour-734505a0/" target="_blank"
+           style="display:flex;align-items:center;gap:8px;
+                 text-decoration:none;color:#0A66C2;">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@9/icons/linkedin.svg"
+             width="18" style="filter:invert(30%) sepia(1) hue-rotate(180deg)"/>
+          Tiphaine BIHOUR
+        </a>
+        """, unsafe_allow_html=True
+    )
+
+st.sidebar.markdown(
+        """<p style="line-height: 1.2; margin: 0;">
+        <a href="https://www.linkedin.com/in/ismaïl-bouazizi-8a1727216/" target="_blank"
+           style="display:flex;align-items:center;gap:8px;
+                 text-decoration:none;color:#0A66C2;">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@9/icons/linkedin.svg"
+             width="18" style="filter:invert(30%) sepia(1) hue-rotate(180deg)"/>
+          Ismaïl BOUAZIZI
+        </a>
+        """, unsafe_allow_html=True
+    )
+
+st.sidebar.markdown(
+        """<p style="line-height: 1.2; margin: 0;">
+        <a href="https://www.linkedin.com/in/lucien-goujon/" target="_blank"
+           style="display:flex;align-items:center;gap:8px;
+                 text-decoration:none;color:#0A66C2;">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@9/icons/linkedin.svg"
+             width="18" style="filter:invert(30%) sepia(1) hue-rotate(180deg)"/>
+          Lucien GOUJON
+        </a>
+        """, unsafe_allow_html=True
+    )
+
+st.sidebar.image("liora_logo_transparent_fixed.png", width=80)
+st.markdown("""
+    <style>
+    [data-testid="stSidebar"] [data-testid="stImage"] {
+        display: flex;
+        justify-content: center;
+    }
+    </style>
+""", unsafe_allow_html=True)
 # --- PAGE ACCUEIL ---
 if page == "Accueil":
     st.write("### Bienvenue dans le projet d'analyse des feux de forêt aux Etats-Unis")
     st.write("""
     Ce dashboard interactif permet d'explorer les facteurs influençant les incendies de forêt.\n
-    Nous avons analysé les données historiques du service forestier américain recensant les feux entre 1992 et 2015.\n
-    Le dataset source de notre travail est en libre accès sur la plateforme Kaggle et contient les caractéristiques de 1 880 465 feux sur cette période. \n
-    Nous avons selectionné, nettoyé et transformé ces données pour les rendre exploitables. \n
-    Initialement consitué de 39 colonnes caractérisant les feux, nous n'en avons selectionné que 21 pertinentes pour l'analyse.\n
-    En effet certaines étaient redondantes entre elles, ou trop incomplètes pour être utiles à notre analyse. \n
-    Nous avons ensuite ajouté 3 colonnes contenant les données météorologiques (température, vitesse du vent et pluie) associées aux principaux Etats touchés par les feux.\n
-    Nous avons mené l'exploration suivant quatre axes : l'axe temporel, de sévérité, géographique et météorologique.\n
-    Bonne lecture !\n
-
     """)
     
+        # --- 1. Synthèse par axes ---
+    col_c1, col_c2 = st.columns(2)
+
+    with col_c1:
+        st.subheader("📋 Les données sources")
+        st.write("""
+        - Nous avons analysé les données historiques des services forestiers américains recensant les feux pendant 23 ans : entre 1992 et 2015.
+        - Le dataset source de notre travail contient les caractéristiques de 1 880 465 feux sur cette période.
+        - Ces données sont en libre accès sur la plateforme Kaggle.
+        """)
+
+    with col_c2:
+        st.subheader("📊 Notre travail")
+        st.write("""
+        - Nous avons selectionné, nettoyé et transformé ces données pour les rendre exploitables.
+        - Initialement consitué de 39 colonnes caractérisant les feux, nous n'en avons selectionné que 21 pertinentes pour l'analyse.
+        - En effet certaines étaient redondantes entre elles, ou trop incomplètes pour être utiles à notre analyse.
+        - Nous avons ensuite ajouté 3 colonnes contenant les données météorologiques (température, vitesse du vent et pluie) associées aux principaux Etats touchés par les feux.
+        - Nous avons mené l'exploration suivant quatre axes : l'axe temporel, de sévérité, géographique et météorologique.
+        """)
+
+    st.divider()
+
+    st.subheader("""
+    **🔍 Bonne lecture !**\n
+    """)
+
     st.info("Utilisez le menu à gauche pour naviguer entre les différents axes d'analyse.")
     
     if st.checkbox("Afficher un aperçu des données sur les 10 premières lignes, correspondant aux 10 plus grands feux"):
         st.dataframe(df.head(10))
+
 
 # --- PAGE ANALYSE MÉTÉO (LUCIEN) ---
 
@@ -126,7 +206,7 @@ elif page == "Analyse météorologique":
     st.divider()
 
     # --- 1. TEMPÉRATURE ET HUMIDITÉ (PLUIE) ---
-    st.subheader("\n 1. Quels sont les impacts combinés de la chaleur et de l'humidité sur l'éclosion des feux ?")
+    st.subheader("\n 1. Quels sont les impacts combinés de la chaleur et de la pluie sur l'éclosion des feux ?")
     
     col_top1, col_top2 = st.columns([2, 1]) 
     cmap = plt.get_cmap('YlOrRd')
@@ -140,10 +220,10 @@ elif page == "Analyse météorologique":
         ax1.set_xlabel('Température Maximale (°C)')
         ax1.set_ylabel('Nombre d\'incendies')
 
-        # Axe 2 : Pluie (Indicateur d'humidité)
+        # Axe 2 : Pluie
         ax1_twin = ax1.twinx()
         sns.kdeplot(df_filtered['pluie_mm'], color='blue', fill=True, ax=ax1_twin, label='Précipitations (mm)')
-        ax1_twin.set_ylabel('Densité d\'absence d\'humidité (Pluie)')
+        ax1_twin.set_ylabel('Densité de pluie')
         
         # Légende unique
         lines_1, labels_1 = ax1.get_legend_handles_labels()
@@ -156,10 +236,10 @@ elif page == "Analyse météorologique":
     with col_top2:
         st.write("\n" * 2) 
         st.write("""
-        ###### 📌 Réponse visuelle : 
+        ###### 📌 Analyse : 
         - **Le seuil critique :** On observe une explosion du nombre de feux dès que la température dépasse les **25°C**.
-        - **Le facteur humidité :** La courbe bleue montre que la densité d'incendies est maximale quand les précipitations sont à **0mm**. 
-        - **Conclusion :** Le stress hydrique de la végétation (basse humidité) combiné à une forte chaleur constitue le "cocktail explosif" idéal pour le départ d'un feu.
+        - **Le facteur de pluie :** La courbe bleue montre que la densité d'incendies est maximale quand les précipitations sont à **0mm**. 
+        - **Conclusion :** Le stress hydrique de la végétation (peu de pluie ) combiné à une forte chaleur constitue le "cocktail explosif" idéal pour le départ d'un feu.
         """)
 
     st.divider()
@@ -201,7 +281,7 @@ elif page == "Analyse météorologique":
         st.pyplot(fig3)
 
     st.markdown("""
-    ###### 📌 Réponse visuelle : 
+    ###### 📌 Analyse : 
     - **Le vent, moteur de propagation :** Si le premier graphique montre que beaucoup de feux naissent par vent faible, le second révèle que les **incendies les plus vastes** (en sombre) surviennent lorsque le vent forcit.
     - **L'effet couloir :** Un vent soutenu (> 20-30 km/h) couplé à une forte température empêche l'extinction rapide et favorise les sautes de feu.
     """)
@@ -216,9 +296,91 @@ elif page == "Analyse de sévérité":
     def st_plotly_fast(fig, height=500):
         """Affiche un graphique Plotly via HTML pour réduire la surcharge Streamlit"""
         components.html(pio.to_html(fig, include_plotlyjs='cdn', full_html=False), height=height)
+    
+# --- Section tendance annuelle de la taille médiane---
+    # Tendance de la sévérité par année
+    st.subheader("1. Quelle est la tendance annuelle de la taille médiane des feux?")
+    df_year = df.groupby('FIRE_YEAR')['FIRE_SIZE_HECT'].median().reset_index()
+    fig4 = px.line(
+        df_year,
+        x='FIRE_YEAR',
+        y='FIRE_SIZE_HECT',
+        title="Tendance annuelle de la taille médiane des feux",
+        markers=True,
+        line_shape='linear',
+        color_discrete_sequence=['rgb(128,0,38)']
+    )
+    st_plotly_fast(fig4, height=400)
+    st.markdown("""
+    ###### 📌 Analyse : 
+    - La taille médiane des feux reste globalement stable entre 0,2 et 0,4 ha sur la période 1992–2015.
+    - Cela indique que la plupart des incendies sont de petite taille et sont rapidement maîtrisés.
+    - Les variations selon les années peuvent s’expliquer par les conditions climatiques ou la gestion des feux.
+    """)
+
+# --- Section top 3 des causes de feux --
+    st.subheader("2. Quelles causes provoquent le plus de surface brûlée ?")
+
+    # palette commune
+    c = dict(zip(df["STAT_CAUSE_DESCR"].unique(), px.colors.qualitative.T10))
+
+    # surface totale brûlée par cause
+    df_surface = (
+        df.groupby("STAT_CAUSE_DESCR")["FIRE_SIZE_HECT"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(3)
+        .reset_index()
+    )
+
+    fig_surface = px.bar(
+        df_surface,
+        x="STAT_CAUSE_DESCR",
+        y="FIRE_SIZE_HECT",
+        color="STAT_CAUSE_DESCR",
+        title="Top 3 des causes d'incendies par surface brûlée",
+        color_discrete_map=c
+    )
+
+    fig_surface.update_layout(
+        xaxis_title="Cause de l'incendie",
+        yaxis_title="Surface totale brûlée (hectares)",
+        showlegend=False
+    )
+
+    st_plotly_fast(fig_surface, height=400)
+
+    st.markdown("""
+    ###### 📌 Analyse :
+    - Certaines causes d'incendies, bien que moins fréquentes, peuvent générer des feux beaucoup plus destructeurs.
+    - Les incendies d'origine naturelle comme la foudre sont souvent associés à des feux de grande ampleur.
+    - Cela s’explique notamment par le fait qu’ils surviennent souvent dans des zones isolées où la détection et l’intervention sont plus difficiles.
+    """)    
+# --- Section Distribution des causes par taille de feu ---
+    # Distribution des causes par taille de feu
+    from PIL import Image
+
+    # --- Question posée comme subheader ---
+    st.subheader("3. Quelle est la distribution des causes par taille de feu?")
+
+    st.markdown(
+        "<p style='text-align: center; font-size:18px; color:black; margin-bottom:0;'>Distribution de la taille des feux par cause</p>",
+        unsafe_allow_html=True
+    )
+
+    img = Image.open("boxplot_causes.png")
+    st.image(img, use_container_width=True)
+
+    st.markdown("""
+    ###### 📌 Analyse : 
+    - La majorité des feux sont de petite taille, indépendamment de la cause.  
+    - Certaines causes peuvent générer des incendies exceptionnellement grands.  
+    - La distribution est très asymétrique : la plupart des feux restent petits, mais les outliers peuvent avoir un impact significatif.  
+    - Ces points extrêmes doivent être pris en compte pour la planification et la prévention.
+    """)
 
     # --- Explication des classes de feux ---
-    st.markdown("#### 📌 Classement des feux par taille")
+    st.markdown("#### Classement des feux par taille")
     colA, colB = st.columns(2)
     with colA:
         st.markdown("""
@@ -240,75 +402,39 @@ elif page == "Analyse de sévérité":
     col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader("1. Nombre de feux par classe")
+        st.subheader("4. Quel est le nombre de feux par classe?")
         df_class = df['FIRE_SIZE_CLASS'].value_counts().sort_index().reset_index()
         df_class.columns = ['FIRE_SIZE_CLASS','count']
         fig2 = px.bar(
             df_class,
             x='FIRE_SIZE_CLASS',
             y='count',
+            title="Nombre de feux par classe (A à G)",
             color_discrete_sequence=['rgb(254,178,76)']
         )
         st_plotly_fast(fig2, height=400)
         st.markdown("""
-        ### 📌 Lecture du graphique
+        ###### 📌 Analyse : 
         - Les petites classes (A, B, C) représentent le plus grand nombre de feux.
         - Les classes D à G sont moins fréquentes, mais leur impact sur la surface totale brûlée est important.
         """)
 
     with col2:
-        st.subheader("2. Surface totale brûlée par classe")
+        st.subheader("5. Quelle est la surface totale brûlée par classe?")
         df_sum = df.groupby('FIRE_SIZE_CLASS')['FIRE_SIZE_HECT'].sum().sort_index().reset_index()
         fig3 = px.bar(
             df_sum,
             x='FIRE_SIZE_CLASS',
             y='FIRE_SIZE_HECT',
+            title="Surface totale brûlée par classe",
             color_discrete_sequence=['rgb(254,178,76)']
         )
         st_plotly_fast(fig3, height=400)
         st.markdown("""
-        ### 📌 Lecture du graphique
+        ###### 📌 Analyse : 
         - Les classes F et G, bien que rares, représentent la majorité de la surface brûlée.
         - Les classes A à D contribuent peu à la surface totale malgré leur fréquence.
         """)
-
-    # 3️⃣ Tendance de la sévérité par année
-    st.subheader("3. Tendance annuelle de la taille médiane des feux")
-    df_year = df.groupby('FIRE_YEAR')['FIRE_SIZE_HECT'].median().reset_index()
-    fig4 = px.line(
-        df_year,
-        x='FIRE_YEAR',
-        y='FIRE_SIZE_HECT',
-        markers=True,
-        line_shape='linear',
-        color_discrete_sequence=['rgb(128,0,38)']
-    )
-    st_plotly_fast(fig4, height=400)
-    st.markdown("""
-    ### 📌 Lecture du graphique
-    - La taille médiane des feux reste globalement stable entre 0,2 et 0,4 ha sur la période 1992–2015.
-    - Cela indique que la plupart des incendies sont de petite taille et sont rapidement maîtrisés.
-    - Les variations selon les années peuvent s’expliquer par les conditions climatiques ou la gestion des feux.
-    """)
-
-    # 4️⃣ Distribution des causes par taille de feu
-    st.subheader("4. Distribution des causes par taille de feu")
-    fig5 = px.box(
-        df,
-        x='STAT_CAUSE_DESCR',
-        y='FIRE_SIZE_HECT',
-        log_y=True,
-        color='STAT_CAUSE_DESCR',
-        color_discrete_sequence=px.colors.qualitative.T10
-    )
-    st_plotly_fast(fig5, height=450)
-    st.markdown("""
-    ### 📌 Lecture du graphique
-    - La majorité des feux sont de petite taille, indépendamment de la cause.
-    - Certaines causes (foudre, brûlage de débris, diverses causes) peuvent générer des incendies exceptionnellement grands.
-    - La distribution est très asymétrique : la plupart des feux restent petits, mais les outliers peuvent avoir un impact significatif.
-    - Ces points extrêmes doivent être pris en compte pour la planification et la prévention, car ils représentent les feux les plus destructeurs.
-    """)
 
     st.subheader("\n -> Maintenant qu'on a vu la sévérité selon la taille et la cause : quelles régions concentrent ces incendies ? ")
 
@@ -527,7 +653,7 @@ elif page == "Analyse géographique":
     st.write("## Analyse géographique des feux")
 
     # 1️⃣ Hectares brûlés par région
-    st.subheader("\n 1. Analyse des hectares brûlés par région")
+    st.subheader("\n 1. Quelles sont les régions les plus touchées ?")
 
     df_zone = df.groupby("REGION", as_index=False)["FIRE_SIZE_HECT"].sum().sort_values("FIRE_SIZE_HECT", ascending=False)
     fig = px.bar(
@@ -539,14 +665,21 @@ elif page == "Analyse géographique":
         color="FIRE_SIZE_HECT",
         color_continuous_scale="YlOrRd"
     )
+    fig.update_layout(title_text = "Hectares brûlés par région (1992-2015)",
+                      title_font_style= "italic",
+                      width=1500,
+                          height=500,
+                          bargap=0.3)
     st.plotly_chart(fig)
     top_region = df_zone.iloc[0]
     st.markdown("""
-    ###### 📌 Analyse : La région la plus touchée est la région Ouest avec environ 43 millions d'hectares brûlés. Les autres régions ont des surfaces brûlées beaucoup moins importantes, ce qui montre la concentration géographique des feux.
+    ###### 📌 Analyse : 
+    - La région la plus touchée est la région Ouest avec environ 43 millions d'hectares brûlés. 
+    - Les autres régions ont des surfaces brûlées beaucoup moins importantes, ce qui montre la concentration géographique des feux.
     """)
 
     # 2️⃣ Hectares brûlés par État
-    st.subheader("\n 2. Analyse des hectares brûlés par État")
+    st.subheader("\n 2. Quels sont les États les plus touchés ?")
 
     df_state = df.groupby("STATE", as_index=False).agg({"FIRE_SIZE_HECT": "sum"})
     fig = px.choropleth(
@@ -557,15 +690,22 @@ elif page == "Analyse géographique":
         scope="usa",
         color_continuous_scale="YlOrRd",
     )
+    fig.update_layout(title_text = "Hectares brûlés par État (1992-2015)",
+                      title_font_style= "italic",
+                      width=1500,
+                          height=500,
+                          bargap=0.3)
     st.plotly_chart(fig)
     max_state = df_state.loc[df_state["FIRE_SIZE_HECT"].idxmax(), "STATE"]
     max_value = df_state["FIRE_SIZE_HECT"].max()
     st.markdown("""
-    ###### 📌 Analyse : L'État le plus touché est L'Alaska avec 13 Millions d'hectares brûlés. Les autres États présentent des surfaces brûlées beaucoup plus faibles, ce qui montre la concentration des incendies.
+    ###### 📌 Analyse : 
+    - L'État le plus touché est L'Alaska avec 13 Millions d'hectares brûlés. 
+    - Les autres États présentent des surfaces brûlées beaucoup plus faibles, ce qui montre la concentration des incendies.
     """)
 
     # 3️⃣ Cause principale des feux par État
-    st.subheader("\n 3. Analyse de la cause principale des feux par État")
+    st.subheader("\n 3. Quelles sont les causes principales des feux par État ?")
 
     c = dict(zip(df["STAT_CAUSE_DESCR"].unique(), px.colors.qualitative.T10))
     df_region = df.groupby(['STATE', 'STAT_CAUSE_DESCR'], as_index=False).size().rename(columns={'size':'count'})
@@ -578,13 +718,20 @@ elif page == "Analyse géographique":
         scope='usa',
         color_discrete_map=c,
     )
+    fig.update_layout(title_text = "Cause principale des feux par État (1992-2015)",
+                      title_font_style= "italic",
+                      width=1500,
+                          height=500,
+                          bargap=0.3)
     st.plotly_chart(fig)
     st.markdown("""
-    ###### 📌 Analyse : Chaque État est coloré selon la cause la plus fréquente des incendies. On peut identifier rapidement que la foudre et l'activité humaine (avec Debris burning) sont les causes principales.
+    ###### 📌 Analyse : 
+    - Chaque État est coloré selon la cause la plus fréquente des incendies. 
+    - On peut identifier rapidement que la foudre et l'activité humaine (avec Debris burning) sont les causes principales.
     """)
     
     # 4️⃣ Durée moyenne des feux par État
-    st.subheader("\n 4. Analyse de la durée moyenne des feux par État")
+    st.subheader("\n 4. Quelle est la durée moyenne des feux par État ?")
 
     df['FIRE_DURATION'] = pd.to_timedelta(df['FIRE_DURATION'], errors='coerce')
     df['FIRE_DURATION_DAYS'] = df['FIRE_DURATION'].dt.total_seconds() / (24*3600)
@@ -602,14 +749,21 @@ elif page == "Analyse géographique":
     labels={'FIRE_DURATION_DAYS': 'Durée moyenne (jours)'},
     title='Durée moyenne des feux par État'
     )
+    fig.update_layout(title_text = "Durée moyenne des feux par État (1992-2015)",
+                      title_font_style= "italic",
+                      width=1500,
+                          height=500,
+                          bargap=0.3)
     st.plotly_chart(fig)
 
     st.markdown("""
-    ###### 📌 Analyse : Chaque État est coloré selon la durée moyenne des feux. Cela nous permet d’identifier les États où les incendies sont fréquents et prolongés. 
-    Ces informations sont utiles pour la planification et la prévention.
+    ###### 📌 Analyse : 
+    - Chaque État est coloré selon la durée moyenne des feux. 
+    - Cela nous permet d’identifier les États où les incendies sont fréquents et prolongés. 
+    - Ces informations sont utiles pour la planification et la prévention.
     """)
 
-    st.subheader("\n 5. Cartographie forestière et désertique des USA")
+    st.subheader("\n 5. Quelle est la répartition géographique des forêts et déserts aux USA ?")
 
     image_path = os.path.join(os.path.dirname(__file__), "cartographieusa.jpg")
 
@@ -617,18 +771,22 @@ elif page == "Analyse géographique":
     st.image(image_path, caption="https://super-duper.fr/country/usa.php", width=800)
     
     st.markdown("""
-    ###### 📌 Analyse : Cette carte nous montre la répartition géographique des forêts aux États-Unis, ce qui nous permet de visualiser les zones les plus vulnérables aux incendies.
+    ###### 📌 Analyse : 
+    - Cette carte nous montre la répartition géographique des forêts aux États-Unis
+    - Cela nous permet de visualiser les zones les plus vulnérables aux incendies.
     """)
 
-    st.subheader("\n 6. Cartographie des climats des USA")
+    st.subheader("\n 6. Quelle est la cartographie des climats des USA ?")
 
-    image_path = os.path.join(os.path.dirname(__file__), "Localisation - climats-etats-unis.jpg")
+    image_path = os.path.join(os.path.dirname(__file__), "carte_climat_usa_legende_droite_v2.jpg")
 
     # Affichage de l'image avec largeur maximale
     st.image(image_path, caption="https://www.climatsetvoyages.com/cllmat/etats-unis", width=800)
     
     st.markdown("""
-    ###### 📌 Analyse : Voici une représentation des climats aux États-Unis, ce qui nous permet de de voir si les conditions météorologiques qui influencent la propagation des incendies.
+    ###### 📌 Analyse : 
+    - Cette carte permet de visualiser les différents climats aux États-Unis 
+    - Nous pouvons voir quelles sont les conditions météorologiques qui influencent sur la propagation des incendies.
     """)
 
     st.subheader("\n ->  Nous pouvons maintenant nous demander si les conditions météorologiques jouent un rôle dans la localisation des feux de forêt ?")
@@ -650,15 +808,15 @@ elif page == "Conclusion":
     with col_c1:
         st.subheader("📍 Dynamique Géographique et Sévérité")
         st.write("""
-        - **Localisation :** L'analyse  a montré une disparité flagrante : si le Sud est la région la plus souvent touchée en nombre de départs, l'**Ouest américain (et l'Alaska)** concentre l'essentiel des surfaces dévastées.
-        - **Sévérité :** L'étude souligne la loi du "90/10" : 90% des feux sont maîtrisés rapidement (Classes A-B), mais moins de 1% des feux (Classe G) causent plus de 80% des dégâts totaux.
+        - **Localisation :** Les travaux de l’analyse montrent une différence claire : le Sud est la région la plus souvent touchée en nombre de départs de feux ; l’Ouest américain (y compris l’Alaska) est en revanche la première région touchée avec le plus de surfaces brûlées.
+        - **Sévérité :** si la majorité des départs de feu (90 %) est maîtrisée quasi immédiatement, une minorité de sinistres (moins de 1 %) est responsable de plus de 80 % des dommages globaux.
         """)
 
     with col_c2:
         st.subheader("🌦️ Facteurs Climatiques et Temporels")
         st.write("""
         - **Temporalité :** L'analyse confirme une saisonnalité critique en **juillet et août**, période où les ressources de lutte doivent être à leur maximum.
-        - **Météo (Le duo fatal) :** L'étude démontre que la **température** élevée est le "détonateur" (éclosion), tandis que la vitesse du **vent** est le véritable "propagateur" (sévérité). L'absence de pluie est la condition sine qua non de ces catastrophes.
+        - **Météo :** L'étude démontre que la **température** élevée est le "détonateur", tandis que la vitesse du **vent** est le véritable "propagateur".
         """)
 
     st.divider()
@@ -666,15 +824,14 @@ elif page == "Conclusion":
     # --- 2. Apports du Dashboard ---
     st.subheader("🚀 L'apport de l'outil Streamlit")
     st.success("""
-    L'interactivité de ce tableau de bord, notamment grâce aux **filtres dynamiques par État**, permet de sortir des statistiques globales pour effectuer un **drill-down** localisé. 
-    C'est un outil précieux pour :
+    L'interactivité de ce tableau de bord nous permet de :
     1. **Anticiper** les besoins en ressources selon les prévisions météo.
     2. **Cibler** les campagnes de prévention selon les causes majoritaires identifiées par État (ex: foudre vs activité humaine).
     """)
 
     # --- 3. Ouverture ---
     st.info("""
-    **Perspectives :** Ce projet pourrait évoluer vers une dimension prédictive. En intégrant des modèles de **Machine Learning**, l'application pourrait estimer en temps réel le risque de propagation d'un nouveau foyer dès son signalement, en fonction des données vent/température/humidité du jour.
+    **Perspectives :** Ce projet pourrait évoluer vers une dimension prédictive. En intégrant des modèles de **Machine Learning**, l'application pourrait estimer en temps réel le risque de propagation d'un nouveau foyer dès son signalement, en fonction des données du jour.
     """)
 
     # Crédits finaux
