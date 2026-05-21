@@ -39,7 +39,7 @@ Fire severity distribution
 Geographic hotspots
 Weather correlation with fire occurrence
 
-👤 My Contribution
+👤 My Contribution:
 Fire severity axis
 Data cleaning and preprocessing
 Feature selection and transformation
