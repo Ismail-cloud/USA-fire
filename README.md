@@ -1,22 +1,52 @@
-# USA-fire
-Projet de data analyse basé sur les donnée provenant de Kaggle sur les feux de forêts aux USA
-https://www.kaggle.com/datasets/rtatman/188-million-us-wildfires
+USA Fire Analysis (1992–2015)
 
-Le Dashboard interactif est accessible sur streamlit: https://usa-fire-hnvb93cctzgdbrftgqc6by.streamlit.app/
+Interactive data analysis project on US wildfires using Kaggle dataset.
 
+📊 Dataset: https://www.kaggle.com/datasets/rtatman/188-million-us-wildfires
+🚀 Interactive dashboard: https://usa-fire-hnvb93cctzgdbrftgqc6by.streamlit.app/
 
-Nous avons analysé les données historiques du service forestier américain recensant les feux entre 1992 et 2015.
+🎯 Objective
 
-Le dataset source de notre travail est en libre accès sur la plateforme Kaggle et contient les caractéristiques de 1 880 465 feux sur cette période.
+Analyze historical wildfire data in the United States to identify patterns related to:
 
-Nous avons selectionné, nettoyé et transformé ces données pour les rendre exploitables.
+time (seasonality, trends)
+severity of fires
+geographic distribution
+weather conditions
 
-Initialement consitué de 39 colonnes caractérisant les feux, nous n'en avons selectionné que 21 pertinentes pour l'analyse.
+🛠️ Tech Stack
+Python (Pandas, NumPy)
+Data cleaning & preprocessing
+Streamlit (interactive dashboard)
+Data visualization
 
-En effet certaines étaient redondantes entre elles, ou trop incomplètes pour être utiles à notre analyse.
+🧹 Data Processing
+Dataset: 1,880,465 wildfire records (1992–2015)
+Original dataset: 39 features
+Selected: 21 relevant features for analysis
+Removed redundant / incomplete columns
+Added external weather features:
+temperature
+wind speed
+rainfall (by state)
 
-Nous avons ensuite ajouté 3 colonnes contenant les données météorologiques (température, vitesse du vent et pluie) associées aux principaux Etats touchés par les feux.
+📊 Analysis Performed
 
-Nous avons mené l'exploration suivant quatre axes : l'axe temporel, de sévérité, géographique et météorologique.
+We explored the data across four main dimensions:
 
-Bonne lecture !
+Temporal trends (seasonality, yearly evolution)
+Fire severity distribution
+Geographic hotspots
+Weather correlation with fire occurrence
+
+👤 My Contribution
+Fire severity axis
+Data cleaning and preprocessing
+Feature selection and transformation
+Exploratory data analysis
+Streamlit dashboard development
+
+🚀 Dashboard
+
+Interactive visualization available here:
+https://usa-fire-hnvb93cctzgdbrftgqc6by.streamlit.app/
